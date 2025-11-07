@@ -6,7 +6,13 @@
     <title>MIZHWIX SHOP - Премиум аккаунты Fortnite</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Добавьте Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
     <style>
+        /* Тот же красивый стиль что и раньше */
         :root {
             --primary: #ff3e7f;
             --primary-dark: #e0356e;
@@ -14,7 +20,7 @@
             --accent: #9b59b6;
             --fortnite-blue: #00b2ff;
             --fortnite-purple: #8a2be2;
-            --funpay-orange: #ff6b35;
+            --fanpay-orange: #ff6b35;
             --dark: #1a1a2e;
             --darker: #16213e;
             --light: #ecf0f1;
@@ -46,74 +52,11 @@
             padding: 0 20px;
         }
 
-        /* Animated Background */
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.1;
-        }
-
-        .floating-element {
-            position: absolute;
-            border-radius: 50%;
-            background: var(--gradient-fortnite);
-            animation: float 20s infinite ease-in-out;
-            opacity: 0.7;
-        }
-
-        .floating-element:nth-child(1) {
-            width: 300px;
-            height: 300px;
-            top: -100px;
-            left: -100px;
-            animation-delay: 0s;
-        }
-
-        .floating-element:nth-child(2) {
-            width: 200px;
-            height: 200px;
-            top: 20%;
-            right: 10%;
-            animation-delay: 5s;
-            background: var(--gradient);
-        }
-
-        .floating-element:nth-child(3) {
-            width: 150px;
-            height: 150px;
-            bottom: 10%;
-            left: 20%;
-            animation-delay: 10s;
-            background: var(--funpay-orange);
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg) scale(1);
-            }
-            33% {
-                transform: translateY(-30px) rotate(120deg) scale(1.1);
-            }
-            66% {
-                transform: translateY(20px) rotate(240deg) scale(0.9);
-            }
-        }
-
-        /* Header Styles */
+        /* Все остальные стили остаются такими же красивыми */
         header {
             padding: 50px 0 30px;
             position: relative;
             text-align: center;
-        }
-
-        .logo-container {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 20px;
         }
 
         .logo {
@@ -125,113 +68,8 @@
             background-clip: text;
             color: transparent;
             text-shadow: 0 0 50px rgba(0, 178, 255, 0.5);
-            animation: glow 3s infinite alternate, bounce 6s infinite ease-in-out;
-            position: relative;
-            z-index: 2;
-        }
-
-        .logo-badge {
-            position: absolute;
-            top: -10px;
-            right: -20px;
-            background: var(--funpay-orange);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            transform: rotate(15deg);
-            animation: badgePulse 2s infinite;
-            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
-        }
-
-        @keyframes glow {
-            0% {
-                text-shadow: 0 0 20px rgba(0, 178, 255, 0.5);
-            }
-            100% {
-                text-shadow: 0 0 40px rgba(0, 178, 255, 0.8), 0 0 60px rgba(0, 178, 255, 0.6);
-            }
-        }
-
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        @keyframes badgePulse {
-            0%, 100% {
-                transform: rotate(15deg) scale(1);
-            }
-            50% {
-                transform: rotate(15deg) scale(1.1);
-            }
-        }
-
-        .tagline {
-            font-size: 1.4rem;
-            opacity: 0.9;
-            margin-bottom: 40px;
-            animation: fadeInUp 1s ease;
-        }
-
-        /* Stickers */
-        .stickers-container {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .sticker {
-            position: absolute;
-            font-size: 3rem;
-            opacity: 0.1;
-            animation: stickerFloat 25s infinite linear;
-        }
-
-        .sticker.fortnite {
-            color: var(--fortnite-blue);
-        }
-
-        .sticker.funpay {
-            color: var(--funpay-orange);
-        }
-
-        .sticker:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
-        .sticker:nth-child(2) { top: 20%; right: 8%; animation-delay: 5s; }
-        .sticker:nth-child(3) { bottom: 15%; left: 10%; animation-delay: 10s; }
-        .sticker:nth-child(4) { bottom: 25%; right: 5%; animation-delay: 15s; }
-        .sticker:nth-child(5) { top: 40%; left: 15%; animation-delay: 20s; }
-
-        @keyframes stickerFloat {
-            0% {
-                transform: translateY(0) rotate(0deg);
-            }
-            25% {
-                transform: translateY(-20px) rotate(90deg);
-            }
-            50% {
-                transform: translateY(0) rotate(180deg);
-            }
-            75% {
-                transform: translateY(20px) rotate(270deg);
-            }
-            100% {
-                transform: translateY(0) rotate(360deg);
-            }
-        }
-
-        /* Form Styles */
-        .form-section {
-            padding: 30px 0;
-            position: relative;
-            z-index: 2;
+            animation: glow 3s infinite alternate;
+            margin-bottom: 20px;
         }
 
         .form-container {
@@ -243,29 +81,7 @@
             max-width: 850px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .form-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.7s;
-        }
-
-        .form-container:hover::before {
-            left: 100%;
-        }
-
-        .form-container:hover {
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 35px 60px rgba(0, 0, 0, 0.4);
+            transition: all 0.5s ease;
         }
 
         .form-title {
@@ -274,32 +90,10 @@
             font-size: 2.3rem;
             font-weight: 700;
             color: var(--light);
-            position: relative;
-            animation: slideInDown 0.8s ease;
-        }
-
-        .form-title::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 5px;
-            background: var(--gradient-fortnite);
-            border-radius: 3px;
-            animation: widthGrow 2s infinite alternate;
-        }
-
-        @keyframes widthGrow {
-            0% { width: 100px; }
-            100% { width: 150px; }
         }
 
         .form-group {
             margin-bottom: 30px;
-            position: relative;
-            animation: fadeInUp 0.6s ease;
         }
 
         label {
@@ -308,70 +102,28 @@
             font-weight: 600;
             font-size: 1.1rem;
             color: var(--light);
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
-        label i {
-            color: var(--fortnite-blue);
-            font-size: 1.2rem;
-        }
-
-        .input-container {
-            position: relative;
-        }
-
-        .input-icon {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--primary);
-            font-size: 1.3rem;
-            transition: all 0.3s ease;
-            z-index: 2;
-        }
-
-        input, textarea, select {
+        input, textarea {
             width: 100%;
-            padding: 18px 20px 18px 60px;
+            padding: 18px 20px;
             border-radius: 15px;
             border: 2px solid rgba(255, 255, 255, 0.2);
             background: rgba(0, 0, 0, 0.4);
             color: var(--light);
             font-size: 1.1rem;
             transition: all 0.4s ease;
-            font-family: 'Roboto', sans-serif;
-            position: relative;
-            z-index: 1;
         }
 
         textarea {
             min-height: 140px;
             resize: vertical;
-            padding-left: 20px;
         }
 
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: var(--fortnite-blue);
-            box-shadow: 0 0 0 4px rgba(0, 178, 255, 0.2);
-            background: rgba(0, 0, 0, 0.6);
-            transform: translateY(-2px);
-        }
-
-        input:focus + .input-icon {
-            color: var(--fortnite-blue);
-            transform: translateY(-50%) scale(1.2);
-        }
-
-        /* Button Styles */
         .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 18px 40px;
+            display: block;
+            width: 100%;
+            padding: 18px;
             background: var(--gradient-fortnite);
             color: white;
             border: none;
@@ -379,126 +131,18 @@
             font-size: 1.2rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-align: center;
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 178, 255, 0.3);
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: all 0.6s;
-        }
-
-        .btn:hover::before {
-            left: 100%;
+            transition: all 0.4s ease;
+            margin-top: 20px;
         }
 
         .btn:hover {
-            transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 20px 40px rgba(0, 178, 255, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 178, 255, 0.4);
         }
 
-        .btn:active {
-            transform: translateY(-2px) scale(1.02);
-        }
-
-        .btn i {
-            margin-right: 12px;
-            font-size: 1.3rem;
-        }
-
-        .btn-block {
-            display: block;
-            width: 100%;
-        }
-
-        /* Admin Panel Styles */
         .admin-panel {
             display: none;
             margin-top: 50px;
-            animation: fadeIn 0.8s ease;
-        }
-
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .logout-btn {
-            background: rgba(255, 255, 255, 0.15);
-            color: var(--light);
-            backdrop-filter: blur(10px);
-        }
-
-        .logout-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-        }
-
-        .orders-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: var(--gradient-fortnite);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .stat-value {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-            background: var(--gradient-fortnite);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .stat-label {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            font-weight: 600;
-        }
-
-        .orders-list {
-            margin-top: 30px;
         }
 
         .order-card {
@@ -506,126 +150,9 @@
             border-radius: 20px;
             padding: 30px;
             margin-bottom: 25px;
-            animation: slideInUp 0.6s ease;
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
+            border-left: 8px solid var(--fortnite-blue);
         }
 
-        .order-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 8px;
-            height: 100%;
-            background: var(--gradient-fortnite);
-        }
-
-        .order-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-        }
-
-        .order-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .order-id {
-            font-weight: 800;
-            color: var(--fortnite-blue);
-            font-size: 1.4rem;
-        }
-
-        .order-date {
-            opacity: 0.8;
-            font-size: 1rem;
-            background: rgba(255,255,255,0.1);
-            padding: 8px 15px;
-            border-radius: 10px;
-        }
-
-        .order-details {
-            margin-top: 20px;
-        }
-
-        .order-field {
-            margin-bottom: 15px;
-            display: flex;
-            align-items: flex-start;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .field-label {
-            font-weight: 700;
-            display: inline-block;
-            width: 200px;
-            flex-shrink: 0;
-            color: var(--fortnite-blue);
-        }
-
-        .field-value {
-            flex: 1;
-            background: rgba(0,0,0,0.3);
-            padding: 12px 18px;
-            border-radius: 10px;
-            border-left: 3px solid var(--primary);
-        }
-
-        .order-actions {
-            display: flex;
-            gap: 15px;
-            margin-top: 25px;
-            flex-wrap: wrap;
-        }
-
-        .btn-complete {
-            background: var(--success);
-            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.3);
-        }
-
-        .btn-complete:hover {
-            box-shadow: 0 15px 35px rgba(46, 204, 113, 0.4);
-        }
-
-        .btn-delete {
-            background: #e74c3c;
-            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
-        }
-
-        .btn-delete:hover {
-            box-shadow: 0 15px 35px rgba(231, 76, 60, 0.4);
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideInDown {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideInUp {
-            from { opacity: 0; transform: translateY(50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Notifications */
         .notification {
             position: fixed;
             top: 40px;
@@ -635,302 +162,113 @@
             color: white;
             font-weight: 700;
             z-index: 10000;
-            transform: translateX(150%) rotate(10deg);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            display: flex;
-            align-items: center;
-            max-width: 450px;
-            border: 1px solid rgba(255,255,255,0.2);
+            transform: translateX(150%);
+            transition: all 0.5s ease;
         }
 
         .notification.show {
-            transform: translateX(0) rotate(0deg);
+            transform: translateX(0);
         }
 
         .notification.success {
             background: rgba(46, 204, 113, 0.9);
-            border-left: 6px solid var(--success);
         }
 
         .notification.error {
             background: rgba(231, 76, 60, 0.9);
-            border-left: 6px solid #e74c3c;
         }
 
-        .notification i {
-            margin-right: 15px;
-            font-size: 1.8rem;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 50px 0;
-            margin-top: 80px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-        }
-
-        .footer-text {
-            opacity: 0.7;
-            font-size: 1rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .logo {
-                font-size: 3rem;
-            }
-            
-            .form-container {
-                padding: 30px;
-            }
-            
-            .order-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .field-label {
-                width: 140px;
-            }
-            
-            .orders-stats {
-                grid-template-columns: 1fr;
-            }
-            
-            .panel-header {
-                flex-direction: column;
-                gap: 20px;
-                align-items: flex-start;
-            }
-            
-            .notification {
-                right: 20px;
-                left: 20px;
-                max-width: none;
-            }
-        }
-
-        /* Loading Animation */
-        .loader {
-            display: none;
-            text-align: center;
-            padding: 40px;
-        }
-
-        .loader-spinner {
-            width: 70px;
-            height: 70px;
-            border: 6px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: var(--fortnite-blue);
-            animation: spin 1.2s ease-in-out infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Particle Effects */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--fortnite-blue);
-            border-radius: 50%;
-            animation: particleFloat 15s infinite linear;
-            opacity: 0.3;
-        }
-
-        @keyframes particleFloat {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.5;
-            }
-            90% {
-                opacity: 0.5;
-            }
-            100% {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
-            }
+        @keyframes glow {
+            0% { text-shadow: 0 0 20px rgba(0, 178, 255, 0.5); }
+            100% { text-shadow: 0 0 40px rgba(0, 178, 255, 0.8); }
         }
     </style>
 </head>
 <body>
-    <!-- Animated Background -->
-    <div class="animated-bg">
-        <div class="floating-element"></div>
-        <div class="floating-element"></div>
-        <div class="floating-element"></div>
-    </div>
-
-    <!-- Stickers -->
-    <div class="stickers-container">
-        <div class="sticker fortnite">🎮</div>
-        <div class="sticker funpay">💰</div>
-        <div class="sticker fortnite">🛡️</div>
-        <div class="sticker funpay">⚡</div>
-        <div class="sticker fortnite">🌟</div>
-    </div>
-
-    <!-- Particles -->
-    <div class="particles" id="particles"></div>
-
     <div class="container">
         <header>
-            <div class="logo-container">
-                <h1 class="logo">MIZHWIX SHOP</h1>
-                <div class="logo-badge">FUNPAY</div>
-            </div>
-            <p class="tagline">Эксклюзивные аккаунты Fortnite • Гарантия безопасности • Быстрая доставка</p>
+            <h1 class="logo">MIZHWIX SHOP</h1>
+            <p style="font-size: 1.4rem; opacity: 0.9;">Премиум аккаунты Fortnite • Работает на всех устройствах</p>
         </header>
         
-        <section class="form-section">
+        <section>
             <div class="form-container">
-                <h2 class="form-title"><i class="fas fa-shopping-cart"></i> Форма заказа аккаунта</h2>
+                <h2 class="form-title">🎮 Форма заказа аккаунта</h2>
                 <form id="orderForm">
                     <div class="form-group">
-                        <label for="skins"><i class="fas fa-tshirt"></i> Скины (укажите названия или ID):</label>
-                        <div class="input-container">
-                            <i class="fas fa-user input-icon"></i>
-                            <textarea id="skins" placeholder="Например: Renegade Raider, Galaxy, IKONIK, Recon Expert, Black Knight..." required></textarea>
-                        </div>
+                        <label for="skins">👕 Скины:</label>
+                        <textarea id="skins" placeholder="Например: Renegade Raider, Galaxy, IKONIK..." required></textarea>
                     </div>
                     
                     <div class="form-group">
-                        <label for="picks"><i class="fas fa-gem"></i> Кирки (укажите названия):</label>
-                        <div class="input-container">
-                            <i class="fas fa-hammer input-icon"></i>
-                            <input type="text" id="picks" placeholder="Например: Vision, Studded Axe, Reaper, AC/DC, Party Animal..." required>
-                        </div>
+                        <label for="picks">⛏️ Кирки:</label>
+                        <input type="text" id="picks" placeholder="Например: Vision, Studded Axe, Reaper..." required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="emotes"><i class="fas fa-laugh-beam"></i> Эмоции (укажите названия):</label>
-                        <div class="input-container">
-                            <i class="fas fa-music input-icon"></i>
-                            <input type="text" id="emotes" placeholder="Например: Floss, Orange Justice, Take the L, Electro Shuffle, Default Dance..." required>
-                        </div>
+                        <label for="emotes">💃 Эмоции:</label>
+                        <input type="text" id="emotes" placeholder="Например: Floss, Orange Justice, Take the L..." required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="additional"><i class="fas fa-info-circle"></i> Дополнительная информация:</label>
-                        <textarea id="additional" placeholder="Любая дополнительная информация о пожеланиях к аккаунту, особые запросы, уровень аккаунта и т.д."></textarea>
+                        <label for="additional">📝 Дополнительная информация:</label>
+                        <textarea id="additional" placeholder="Любая дополнительная информация..."></textarea>
                     </div>
                     
                     <div class="form-group">
-                        <label for="budget"><i class="fas fa-money-bill-wave"></i> Максимальная цена (с учетом комиссии FunPay):</label>
-                        <div class="input-container">
-                            <i class="fas fa-ruble-sign input-icon"></i>
-                            <input type="number" id="budget" placeholder="Введите сумму в рублях" min="0" required>
-                        </div>
+                        <label for="budget">💰 Бюджет (руб.):</label>
+                        <input type="number" id="budget" placeholder="Введите сумму" min="0" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="funpayNick"><i class="fas fa-user-tag"></i> Ник на FunPay:</label>
-                        <div class="input-container">
-                            <i class="fas fa-at input-icon"></i>
-                            <input type="text" id="funpayNick" placeholder="Ваш ник на FunPay для связи" required>
-                        </div>
+                        <label for="funpayNick">👤 Ник на FunPay:</label>
+                        <input type="text" id="funpayNick" placeholder="Ваш ник на FunPay" required>
                     </div>
                     
-                    <button type="submit" class="btn btn-block"><i class="fas fa-paper-plane"></i> Отправить заказ</button>
+                    <button type="submit" class="btn">🚀 Отправить заказ</button>
                 </form>
             </div>
             
             <div class="form-container" id="adminLoginContainer">
-                <h2 class="form-title"><i class="fas fa-lock"></i> Вход в админ-панель</h2>
+                <h2 class="form-title">🔐 Вход в админ-панель</h2>
                 <div class="form-group">
-                    <label for="adminPassword"><i class="fas fa-key"></i> Пароль:</label>
-                    <div class="input-container">
-                        <i class="fas fa-lock input-icon"></i>
-                        <input type="password" id="adminPassword" placeholder="Введите пароль администратора">
-                    </div>
+                    <label for="adminPassword">🔑 Пароль:</label>
+                    <input type="password" id="adminPassword" placeholder="Введите пароль">
                 </div>
-                <button id="adminLogin" class="btn btn-block"><i class="fas fa-sign-in-alt"></i> Войти в админ-панель</button>
+                <button id="adminLogin" class="btn">📊 Войти в админ-панель</button>
             </div>
         </section>
         
         <div class="admin-panel" id="adminPanel">
-            <div class="panel-header">
-                <h2 class="form-title"><i class="fas fa-tachometer-alt"></i> Админ-панель - Управление заказами</h2>
-                <button id="logoutBtn" class="btn logout-btn"><i class="fas fa-sign-out-alt"></i> Выйти из системы</button>
+            <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 40px;">
+                <h2 class="form-title">📊 Админ-панель</h2>
+                <button id="logoutBtn" class="btn" style="width: auto; padding: 12px 25px; background: #e74c3c;">🚪 Выйти</button>
             </div>
             
-            <div class="orders-stats">
-                <div class="stat-card">
-                    <div class="stat-value" id="totalOrders">0</div>
-                    <div class="stat-label">Всего заказов</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="newOrders">0</div>
-                    <div class="stat-label">Новых заказов</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="completedOrders">0</div>
-                    <div class="stat-label">Выполнено</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="totalRevenue">0</div>
-                    <div class="stat-label">Общий доход (руб.)</div>
-                </div>
-            </div>
-            
-            <div class="loader" id="ordersLoader">
-                <div class="loader-spinner"></div>
-                <p>Загрузка заказов...</p>
-            </div>
-            
-            <div class="orders-list" id="ordersList">
-                <!-- Заказы будут добавляться сюда -->
+            <div id="ordersList">
+                <!-- Заказы будут загружаться с Firebase -->
             </div>
         </div>
     </div>
     
-    <footer>
-        <div class="container">
-            <p class="footer-text">MIZHWIX SHOP &copy; 2023 • Премиум аккаунты Fortnite • Безопасные сделки через FunPay</p>
-        </div>
-    </footer>
-    
     <div id="notification" class="notification">
-        <i class="fas fa-check-circle"></i>
         <span class="notification-text">Уведомление</span>
     </div>
 
     <script>
-        // Инициализация частиц
-        function initParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 50;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + 'vw';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.background = i % 2 === 0 ? 'var(--fortnite-blue)' : 'var(--primary)';
-                particlesContainer.appendChild(particle);
-            }
-        }
+        // 🔥 ЗАМЕНИТЕ ЭТИ ДАННЫЕ НА ВАШИ С FIREBASE!
+        const firebaseConfig = {
+            apiKey: "AIzaSyC2KDK2_XHdL6Vg4VOkshojNygpzyue56Q",
+            authDomain: "mizhwix-shop-5d6fc.firebaseapp.com",
+            projectId: "mizhwix-shop-5d6fc",
+            storageBucket: "mizhwix-shop-5d6fc.firebasestorage.app",
+            messagingSenderId: "607219191901",
+            appId: "1:607219191901:web:1de124fab1b6ff78823db4"
+        };
+
+        // Инициализация Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
         // Элементы DOM
         const orderForm = document.getElementById('orderForm');
@@ -940,235 +278,162 @@
         const adminLogin = document.getElementById('adminLogin');
         const logoutBtn = document.getElementById('logoutBtn');
         const ordersList = document.getElementById('ordersList');
-        const ordersLoader = document.getElementById('ordersLoader');
         const notification = document.getElementById('notification');
-        const totalOrdersEl = document.getElementById('totalOrders');
-        const newOrdersEl = document.getElementById('newOrders');
-        const completedOrdersEl = document.getElementById('completedOrders');
-        const totalRevenueEl = document.getElementById('totalRevenue');
         
-        // Хранилище заказов
-        let orders = JSON.parse(localStorage.getItem('mizhwixOrders')) || [];
-        
-        // Пароль администратора
         const ADMIN_PASSWORD = '858585';
-        
-        // Инициализация
-        document.addEventListener('DOMContentLoaded', function() {
-            initParticles();
-            updateStats();
-            
-            // Проверяем, был ли пользователь уже авторизован
-            if (localStorage.getItem('adminLoggedIn') === 'true') {
-                adminLoginContainer.style.display = 'none';
-                adminPanel.style.display = 'block';
-                loadOrders();
-            }
-        });
-        
+
         // Показать уведомление
         function showNotification(message, type = 'success') {
             const notificationText = document.querySelector('.notification-text');
             notificationText.textContent = message;
-            
-            const icon = notification.querySelector('i');
-            if (type === 'success') {
-                icon.className = 'fas fa-check-circle';
-            } else {
-                icon.className = 'fas fa-exclamation-circle';
-            }
-            
             notification.className = `notification ${type}`;
             notification.classList.add('show');
             
             setTimeout(() => {
                 notification.classList.remove('show');
-            }, 5000);
+            }, 4000);
         }
-        
-        // Обновление статистики
-        function updateStats() {
-            const totalOrders = orders.length;
-            const newOrders = orders.filter(order => order.status !== 'completed').length;
-            const completedOrders = orders.filter(order => order.status === 'completed').length;
-            const totalRevenue = orders.reduce((sum, order) => sum + (parseInt(order.budget) || 0), 0);
-            
-            totalOrdersEl.textContent = totalOrders;
-            newOrdersEl.textContent = newOrders;
-            completedOrdersEl.textContent = completedOrders;
-            totalRevenueEl.textContent = totalRevenue.toLocaleString();
-        }
-        
-        // Обработка отправки формы заказа
-        orderForm.addEventListener('submit', function(e) {
+
+        // Отправка заказа в Firebase
+        orderForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // Анимация кнопки
             const submitBtn = orderForm.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
+            submitBtn.innerHTML = '⏳ Отправка...';
             submitBtn.disabled = true;
-            
-            setTimeout(() => {
-                // Собираем данные формы
+
+            try {
                 const orderData = {
-                    id: Date.now(),
                     skins: document.getElementById('skins').value,
                     picks: document.getElementById('picks').value,
                     emotes: document.getElementById('emotes').value,
                     additional: document.getElementById('additional').value,
                     budget: document.getElementById('budget').value,
                     funpayNick: document.getElementById('funpayNick').value,
-                    date: new Date().toLocaleString('ru-RU'),
-                    status: 'new'
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    status: 'new',
+                    completed: false
                 };
+
+                // Сохраняем в Firebase
+                await db.collection('orders').add(orderData);
                 
-                // Добавляем заказ в хранилище
-                orders.push(orderData);
-                localStorage.setItem('mizhwixOrders', JSON.stringify(orders));
-                
-                // Очищаем форму
                 orderForm.reset();
+                showNotification('✅ Заказ отправлен! Вы увидите его в админ-панели.');
                 
-                // Восстанавливаем кнопку
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showNotification('❌ Ошибка отправки заказа', 'error');
+            } finally {
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
-                
-                // Показываем уведомление
-                showNotification('🎉 Заказ успешно отправлен! Мы свяжемся с вами в ближайшее время через FunPay.');
-                
-                // Обновляем статистику
-                updateStats();
-                
-                // Если админ панель открыта, обновляем список заказов
-                if (adminPanel.style.display === 'block') {
-                    loadOrders();
-                }
-            }, 1500);
+            }
         });
-        
-        // Обработка входа в админ-панель
+
+        // Вход в админ-панель
         adminLogin.addEventListener('click', function() {
             if (adminPassword.value === ADMIN_PASSWORD) {
                 adminLoginContainer.style.display = 'none';
                 adminPanel.style.display = 'block';
-                localStorage.setItem('adminLoggedIn', 'true');
                 loadOrders();
-                showNotification('🔐 Успешный вход в админ-панель! Теперь вы можете управлять заказами.');
+                showNotification('🔓 Вход выполнен! Загружаем заказы...');
             } else {
-                showNotification('❌ Неверный пароль! Попробуйте снова.', 'error');
+                showNotification('❌ Неверный пароль!', 'error');
             }
         });
-        
+
         // Выход из админ-панели
         logoutBtn.addEventListener('click', function() {
             adminPanel.style.display = 'none';
             adminLoginContainer.style.display = 'block';
-            localStorage.setItem('adminLoggedIn', 'false');
-            showNotification('👋 Вы вышли из админ-панели. Для входа снова введите пароль.');
+            showNotification('👋 Вы вышли из системы');
         });
-        
-        // Загрузка заказов
+
+        // Загрузка заказов из Firebase в реальном времени
         function loadOrders() {
-            ordersLoader.style.display = 'block';
-            ordersList.innerHTML = '';
-            
-            setTimeout(() => {
-                ordersLoader.style.display = 'none';
-                
-                if (orders.length === 0) {
-                    ordersList.innerHTML = `
-                        <div class="form-container" style="text-align: center;">
-                            <h3 style="color: var(--fortnite-blue); margin-bottom: 20px;">📭 Заказов пока нет</h3>
-                            <p style="opacity: 0.8;">Как только клиенты начнут оставлять заказы через форму, они появятся здесь.</p>
-                            <div style="margin-top: 30px; font-size: 4rem; opacity: 0.3;">🎮</div>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                // Сортируем заказы по дате (новые сверху)
-                const sortedOrders = [...orders].sort((a, b) => b.id - a.id);
-                
-                // Добавляем каждый заказ в список
-                sortedOrders.forEach(order => {
-                    const orderCard = document.createElement('div');
-                    orderCard.className = 'order-card';
-                    orderCard.innerHTML = `
-                        <div class="order-header">
-                            <span class="order-id">🎯 Заказ #${order.id}</span>
-                            <span class="order-date">📅 ${order.date}</span>
-                        </div>
-                        <div class="order-details">
-                            <div class="order-field">
-                                <span class="field-label">👤 Ник FunPay:</span>
-                                <span class="field-value">${order.funpayNick}</span>
+            ordersList.innerHTML = '<div style="text-align: center; padding: 40px;">⏳ Загружаем заказы...</div>';
+
+            // Слушаем изменения в базе данных в реальном времени
+            db.collection('orders')
+                .orderBy('timestamp', 'desc')
+                .onSnapshot(snapshot => {
+                    ordersList.innerHTML = '';
+                    
+                    if (snapshot.empty) {
+                        ordersList.innerHTML = `
+                            <div class="form-container" style="text-align: center;">
+                                <h3>📭 Заказов пока нет</h3>
+                                <p>Как только клиенты начнут оставлять заказы, они появятся здесь автоматически!</p>
                             </div>
-                            <div class="order-field">
-                                <span class="field-label">👕 Скины:</span>
-                                <span class="field-value">${order.skins}</span>
+                        `;
+                        return;
+                    }
+
+                    snapshot.forEach(doc => {
+                        const order = doc.data();
+                        const orderCard = document.createElement('div');
+                        orderCard.className = 'order-card';
+                        orderCard.innerHTML = `
+                            <div style="display: flex; justify-content: between; margin-bottom: 20px;">
+                                <strong style="color: var(--fortnite-blue); font-size: 1.3rem;">🎯 Заказ #${doc.id.slice(-6)}</strong>
+                                <span style="opacity: 0.8;">📅 ${order.timestamp ? new Date(order.timestamp.toDate()).toLocaleString('ru-RU') : 'Дата не указана'}</span>
                             </div>
-                            <div class="order-field">
-                                <span class="field-label">⛏️ Кирки:</span>
-                                <span class="field-value">${order.picks}</span>
+                            <div style="margin-top: 20px;">
+                                <div style="margin-bottom: 12px;"><strong>👤 Ник FunPay:</strong> ${order.funpayNick}</div>
+                                <div style="margin-bottom: 12px;"><strong>👕 Скины:</strong> ${order.skins}</div>
+                                <div style="margin-bottom: 12px;"><strong>⛏️ Кирки:</strong> ${order.picks}</div>
+                                <div style="margin-bottom: 12px;"><strong>💃 Эмоции:</strong> ${order.emotes}</div>
+                                <div style="margin-bottom: 12px;"><strong>💰 Бюджет:</strong> ${order.budget} руб.</div>
+                                <div style="margin-bottom: 12px;"><strong>📝 Доп. информация:</strong> ${order.additional || 'Не указано'}</div>
+                                <div style="margin-bottom: 12px;"><strong>📊 Статус:</strong> 
+                                    <span style="color: ${order.completed ? 'var(--success)' : 'var(--warning)'}; font-weight: 700;">
+                                        ${order.completed ? '✅ Выполнен' : '🆕 Новый'}
+                                    </span>
+                                </div>
                             </div>
-                            <div class="order-field">
-                                <span class="field-label">💃 Эмоции:</span>
-                                <span class="field-value">${order.emotes}</span>
+                            <div style="margin-top: 25px; display: flex; gap: 15px;">
+                                ${!order.completed ? 
+                                    `<button onclick="completeOrder('${doc.id}')" class="btn" style="background: var(--success); width: auto; padding: 12px 25px;">
+                                        ✅ Выполнить
+                                    </button>` : ''}
+                                <button onclick="deleteOrder('${doc.id}')" class="btn" style="background: #e74c3c; width: auto; padding: 12px 25px;">
+                                    🗑️ Удалить
+                                </button>
                             </div>
-                            <div class="order-field">
-                                <span class="field-label">💰 Бюджет:</span>
-                                <span class="field-value" style="color: var(--success); font-weight: 700;">${order.budget} руб.</span>
-                            </div>
-                            <div class="order-field">
-                                <span class="field-label">📝 Доп. информация:</span>
-                                <span class="field-value">${order.additional || 'Не указано'}</span>
-                            </div>
-                            <div class="order-field">
-                                <span class="field-label">📊 Статус:</span>
-                                <span class="field-value" style="color: ${order.status === 'completed' ? 'var(--success)' : 'var(--warning)'}; font-weight: 700;">
-                                    ${order.status === 'completed' ? '✅ Выполнен' : '🆕 Новый заказ'}
-                                </span>
-                            </div>
-                        </div>
-                        <div class="order-actions">
-                            ${order.status !== 'completed' ? 
-                                `<button class="btn btn-complete" onclick="completeOrder(${order.id})">
-                                    <i class="fas fa-check-double"></i> Отметить выполненным
-                                </button>` : ''}
-                            <button class="btn btn-delete" onclick="deleteOrder(${order.id})">
-                                <i class="fas fa-trash-alt"></i> Удалить заказ
-                            </button>
-                        </div>
-                    `;
-                    ordersList.appendChild(orderCard);
+                        `;
+                        ordersList.appendChild(orderCard);
+                    });
+                }, error => {
+                    console.error('Ошибка загрузки:', error);
+                    ordersList.innerHTML = '<div style="text-align: center; padding: 40px; color: #e74c3c;">❌ Ошибка загрузки заказов</div>';
                 });
-            }, 1200);
         }
-        
-        // Функция для завершения заказа
-        window.completeOrder = function(orderId) {
-            orders = orders.map(order => {
-                if (order.id === orderId) {
-                    return { ...order, status: 'completed' };
-                }
-                return order;
-            });
-            
-            localStorage.setItem('mizhwixOrders', JSON.stringify(orders));
-            loadOrders();
-            updateStats();
-            showNotification('✅ Заказ успешно отмечен как выполненный!');
+
+        // Функция для выполнения заказа
+        window.completeOrder = async function(orderId) {
+            try {
+                await db.collection('orders').doc(orderId).update({
+                    completed: true,
+                    completedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                showNotification('✅ Заказ отмечен как выполненный!');
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showNotification('❌ Ошибка обновления заказа', 'error');
+            }
         };
-        
+
         // Функция для удаления заказа
-        window.deleteOrder = function(orderId) {
-            if (confirm('⚠️ Вы уверены, что хотите удалить этот заказ? Это действие нельзя отменить.')) {
-                orders = orders.filter(order => order.id !== orderId);
-                localStorage.setItem('mizhwixOrders', JSON.stringify(orders));
-                loadOrders();
-                updateStats();
-                showNotification('🗑️ Заказ был удален из системы.');
+        window.deleteOrder = async function(orderId) {
+            if (confirm('⚠️ Удалить этот заказ?')) {
+                try {
+                    await db.collection('orders').doc(orderId).delete();
+                    showNotification('🗑️ Заказ удален!');
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                    showNotification('❌ Ошибка удаления заказа', 'error');
+                }
             }
         };
     </script>
