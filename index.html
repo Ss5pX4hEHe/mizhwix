@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIZHWIX SHOP - Аккаунты Fortnite</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        :root {
+            --primary: #ff3e7f;
+            --secondary: #3498db;
+            --dark: #1a1a2e;
+            --light: #ecf0f1;
+            --success: #2ecc71;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: var(--light);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+        }
+        
+        .logo {
+            font-size: 3.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+            animation: glow 2s infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255, 62, 127, 0.5); }
+            to { text-shadow: 0 0 20px rgba(255, 62, 127, 0.8); }
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+        
+        .form-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-title {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--light);
+            font-size: 1rem;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .admin-panel {
+            display: none;
+            margin-top: 40px;
+        }
+        
+        .order-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background-color: var(--success);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="logo">MIZHWIX SHOP</h1>
+            <p class="tagline">Премиум аккаунты Fortnite с эксклюзивными скинами</p>
+        </header>
+        
+        <div class="form-container">
+            <h2 class="form-title">Форма заказа аккаунта</h2>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label for="skins">Скины:</label>
+                    <textarea id="skins" placeholder="Например: Renegade Raider, Galaxy, IKONIK..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="picks">Кирки:</label>
+                    <input type="text" id="picks" placeholder="Например: Vision, Studded Axe, Reaper..." required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="emotes">Эмоции:</label>
+                    <input type="text" id="emotes" placeholder="Например: Floss, Orange Justice, Take the L..." required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="additional">Дополнительная информация:</label>
+                    <textarea id="additional" placeholder="Любая дополнительная информация..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="budget">Максимальная цена (руб.):</label>
+                    <input type="number" id="budget" placeholder="Введите сумму" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="funpayNick">Ник на FunPay:</label>
+                    <input type="text" id="funpayNick" placeholder="Ваш ник на FunPay" required>
+                </div>
+                
+                <button type="submit" class="btn">Отправить заказ</button>
+            </form>
+        </div>
+        
+        <div class="form-container" id="adminLoginContainer">
+            <h2 class="form-title">Вход в админ-панель</h2>
+            <div class="form-group">
+                <label for="adminPassword">Пароль:</label>
+                <input type="password" id="adminPassword" placeholder="Введите пароль">
+            </div>
+            <button id="adminLogin" class="btn">Войти</button>
+        </div>
+        
+        <div class="admin-panel" id="adminPanel">
+            <h2 class="form-title">Админ-панель - Заказы</h2>
+            <div class="orders-list" id="ordersList"></div>
+        </div>
+    </div>
+    
+    <div id="notification" class="notification"></div>
+
+    <script>
+        const orderForm = document.getElementById('orderForm');
+        const adminLoginContainer = document.getElementById('adminLoginContainer');
+        const adminPanel = document.getElementById('adminPanel');
+        const adminPassword = document.getElementById('adminPassword');
+        const adminLogin = document.getElementById('adminLogin');
+        const ordersList = document.getElementById('ordersList');
+        const notification = document.getElementById('notification');
+        
+        let orders = JSON.parse(localStorage.getItem('mizhwixOrders')) || [];
+        const ADMIN_PASSWORD = '858585';
+        
+        function showNotification(message, type = 'success') {
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+            setTimeout(() => notification.classList.remove('show'), 3000);
+        }
+        
+        orderForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const orderData = {
+                id: Date.now(),
+                skins: document.getElementById('skins').value,
+                picks: document.getElementById('picks').value,
+                emotes: document.getElementById('emotes').value,
+                additional: document.getElementById('additional').value,
+                budget: document.getElementById('budget').value,
+                funpayNick: document.getElementById('funpayNick').value,
+                date: new Date().toLocaleString('ru-RU')
+            };
+            
+            orders.push(orderData);
+            localStorage.setItem('mizhwixOrders', JSON.stringify(orders));
+            orderForm.reset();
+            showNotification('Заказ успешно отправлен!');
+            
+            if (adminPanel.style.display === 'block') {
+                displayOrders();
+            }
+        });
+        
+        adminLogin.addEventListener('click', function() {
+            if (adminPassword.value === ADMIN_PASSWORD) {
+                adminLoginContainer.style.display = 'none';
+                adminPanel.style.display = 'block';
+                displayOrders();
+                showNotification('Успешный вход в админ-панель');
+            } else {
+                showNotification('Неверный пароль!', 'error');
+            }
+        });
+        
+        function displayOrders() {
+            ordersList.innerHTML = '';
+            
+            if (orders.length === 0) {
+                ordersList.innerHTML = '<p>Заказов пока нет.</p>';
+                return;
+            }
+            
+            const sortedOrders = [...orders].sort((a, b) => b.id - a.id);
+            
+            sortedOrders.forEach(order => {
+                const orderCard = document.createElement('div');
+                orderCard.className = 'order-card';
+                orderCard.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <strong>Заказ #${order.id}</strong>
+                        <span style="opacity: 0.7;">${order.date}</span>
+                    </div>
+                    <div>
+                        <div><strong>Ник FunPay:</strong> ${order.funpayNick}</div>
+                        <div><strong>Скины:</strong> ${order.skins}</div>
+                        <div><strong>Кирки:</strong> ${order.picks}</div>
+                        <div><strong>Эмоции:</strong> ${order.emotes}</div>
+                        <div><strong>Бюджет:</strong> ${order.budget} руб.</div>
+                        <div><strong>Доп. информация:</strong> ${order.additional || 'Не указано'}</div>
+                    </div>
+                    <button onclick="completeOrder(${order.id})" style="margin-top: 10px; padding: 8px 15px; background: #2ecc71; color: white; border: none; border-radius: 5px; cursor: pointer;">Заказ выполнен</button>
+                `;
+                ordersList.appendChild(orderCard);
+            });
+        }
+        
+        window.completeOrder = function(orderId) {
+            orders = orders.filter(order => order.id !== orderId);
+            localStorage.setItem('mizhwixOrders', JSON.stringify(orders));
+            displayOrders();
+            showNotification('Заказ отмечен как выполненный');
+        };
+    </script>
+</body>
+</html>
