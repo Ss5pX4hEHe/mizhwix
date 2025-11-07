@@ -1241,4 +1241,66 @@
                                 <button class="btn btn-small" style="background: var(--status-completed); margin-top: 0;" onclick="updateOrderStatus('${orderId}', 'completed')">✅ Выполнить</button>
                                 <button class="btn btn-small" style="background: var(--status-processing); margin-top: 0;" onclick="updateOrderStatus('${orderId}', 'processing')">🔄 В Обработке</button>
                                 <button class="btn btn-small" style="background: var(--notification-error); margin-top: 0;" onclick="deleteOrder('${orderId}')">🗑️ Удалить</button>
-                                <button class="btn btn-small" style="background: var(--status-new); margin-top: 0;" onclick="saveAdminNotes('${orderId}')">💾 Сохранить
+                                <button class="btn btn-small" style="background: var(--status-new); margin-top: 0;" onclick="saveAdminNotes('${orderId}')">💾 Сохранить Заметки</button>
+                            </div>
+                        `;
+                        ordersList.appendChild(card);
+                    });
+                })
+                .catch(error => {
+                    console.error("Ошибка загрузки заказов: ", error);
+                    ordersList.innerHTML = `<div class="order-card" style="color: var(--notification-error); border-left-color: var(--notification-error);">❌ Ошибка загрузки заказов.</div>`;
+                });
+        }
+
+        // Update Order Status
+        window.updateOrderStatus = function(orderId, newStatus) {
+            db.collection('orders').doc(orderId).update({
+                status: newStatus
+            })
+            .then(() => {
+                showNotification(`✅ Статус заказа ${orderId.substring(0, 6)}... обновлен на: ${newStatus.toUpperCase()}`);
+                loadAdminOrders();
+            })
+            .catch(error => {
+                console.error("Ошибка обновления статуса: ", error);
+                showNotification('❌ Ошибка обновления статуса', 'error');
+            });
+        }
+
+        // Delete Order
+        window.deleteOrder = function(orderId) {
+            if (!confirm(`Вы уверены, что хотите удалить заказ ${orderId.substring(0, 6)}...?`)) {
+                return;
+            }
+
+            db.collection('orders').doc(orderId).delete()
+            .then(() => {
+                showNotification(`🗑️ Заказ ${orderId.substring(0, 6)}... удален`);
+                loadAdminOrders();
+            })
+            .catch(error => {
+                console.error("Ошибка удаления заказа: ", error);
+                showNotification('❌ Ошибка удаления заказа', 'error');
+            });
+        }
+        
+        // Save Admin Notes
+        window.saveAdminNotes = function(orderId) {
+            const notesTextarea = document.getElementById(`notes-${orderId}`);
+            const notes = notesTextarea ? notesTextarea.value : '';
+
+            db.collection('orders').doc(orderId).update({
+                adminNotes: notes
+            })
+            .then(() => {
+                showNotification(`💾 Заметки для заказа ${orderId.substring(0, 6)}... сохранены!`);
+            })
+            .catch(error => {
+                console.error("Ошибка сохранения заметок: ", error);
+                showNotification('❌ Ошибка сохранения заметок', 'error');
+            });
+        }
+    </script>
+</body>
+</html>
