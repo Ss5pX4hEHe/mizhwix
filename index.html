@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     
-    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
@@ -26,7 +25,7 @@
             --success: #2ecc71;
             --warning: #f39c12;
             --gradient: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            --gradient-fortnite: linear-gradient(135deg, var(--fortnite-blue) 0%, var(--fortnite-purple) 100%);
+            --gradient-fortnite: linear-gradient(45deg, var(--fortnite-blue) 0%, var(--fortnite-purple) 100%);
             --gradient-dark: linear-gradient(135deg, var(--darker) 0%, #0f3460 100%);
         }
 
@@ -59,15 +58,18 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            opacity: 0.1;
+            opacity: 0.15;
+            overflow: hidden;
         }
 
         .floating-element {
             position: absolute;
             border-radius: 50%;
             background: var(--gradient-fortnite);
+            box-shadow: 0 0 50px rgba(0, 178, 255, 0.5);
             animation: float 20s infinite ease-in-out;
-            opacity: 0.7;
+            opacity: 0.8;
+            filter: blur(5px);
         }
 
         .floating-element:nth-child(1) {
@@ -108,7 +110,7 @@
             }
         }
 
-        /* FunPay Stickers */
+        /* FunPay/Fortnite Stickers */
         .stickers-container {
             position: fixed;
             width: 100%;
@@ -120,9 +122,12 @@
         .sticker {
             position: absolute;
             font-size: 4rem;
-            opacity: 0.05;
+            opacity: 0.08; /* Более заметные стикеры */
             animation: stickerFloat 30s infinite linear;
             filter: blur(0.5px);
+            font-family: 'Montserrat', sans-serif; /* Для слова FUNPAY */
+            font-weight: 900;
+            white-space: nowrap;
         }
 
         .sticker.funpay {
@@ -133,27 +138,28 @@
             color: var(--fortnite-blue);
         }
 
-        .sticker:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+        .sticker:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; font-size: 5rem; }
         .sticker:nth-child(2) { top: 20%; right: 8%; animation-delay: 6s; }
-        .sticker:nth-child(3) { bottom: 15%; left: 10%; animation-delay: 12s; }
+        .sticker:nth-child(3) { bottom: 15%; left: 10%; animation-delay: 12s; font-size: 6rem; opacity: 0.1; }
         .sticker:nth-child(4) { bottom: 25%; right: 5%; animation-delay: 18s; }
         .sticker:nth-child(5) { top: 40%; left: 15%; animation-delay: 24s; }
+        .sticker:nth-child(6) { bottom: 5%; right: 40%; animation-delay: 30s; color: var(--fanpay-orange); font-size: 5rem; opacity: 0.15; } /* Добавлен FUNPAY */
 
         @keyframes stickerFloat {
             0% {
                 transform: translateY(0) rotate(0deg) scale(1);
             }
             25% {
-                transform: translateY(-40px) rotate(90deg) scale(1.2);
+                transform: translateY(-40px) rotate(15deg) scale(1.1); /* Менее резкий поворот */
             }
             50% {
-                transform: translateY(0) rotate(180deg) scale(1);
+                transform: translateY(0) rotate(0deg) scale(1);
             }
             75% {
-                transform: translateY(40px) rotate(270deg) scale(0.8);
+                transform: translateY(40px) rotate(-15deg) scale(0.9);
             }
             100% {
-                transform: translateY(0) rotate(360deg) scale(1);
+                transform: translateY(0) rotate(0deg) scale(1);
             }
         }
 
@@ -181,32 +187,39 @@
             0% { text-shadow: 0 0 20px rgba(0, 178, 255, 0.5); }
             100% { text-shadow: 0 0 40px rgba(0, 178, 255, 0.8); }
         }
-
+        
         /* Tabs */
         .tabs {
             display: flex;
             justify-content: center;
             margin-bottom: 30px;
-            gap: 10px;
+            gap: 15px; /* Увеличенный зазор */
             flex-wrap: wrap;
         }
 
         .tab-btn {
-            padding: 15px 30px;
+            padding: 15px 35px; /* Больше padding */
             background: rgba(255, 255, 255, 0.1);
-            border: none;
-            border-radius: 10px;
+            border: 2px solid rgba(0, 178, 255, 0.2); /* Тонкая рамка */
+            border-radius: 12px;
             color: var(--light);
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.15rem;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .tab-btn:hover {
+            background: rgba(0, 178, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 178, 255, 0.3);
         }
 
         .tab-btn.active {
             background: var(--gradient-fortnite);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 178, 255, 0.3);
+            transform: translateY(-3px); /* Более заметный подъем */
+            box-shadow: 0 8px 25px rgba(0, 178, 255, 0.4);
+            border: none;
         }
 
         .tab-content {
@@ -218,29 +231,26 @@
             animation: fadeIn 0.5s ease;
         }
 
-        /* Forms */
+        /* Forms (Glassmorphism + Neon) */
         .form-container {
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.05); /* Более прозрачный фон */
+            backdrop-filter: blur(25px); /* Более сильное размытие */
             border-radius: 25px;
             padding: 50px;
             margin: 30px auto;
             max-width: 850px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 50px rgba(0, 178, 255, 0.2); /* Усиленная тень */
+            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.5s ease;
         }
 
         .form-title {
             text-align: center;
             margin-bottom: 40px;
-            font-size: 2.3rem;
-            font-weight: 700;
+            font-size: 2.5rem; /* Увеличенный размер */
+            font-weight: 800;
             color: var(--light);
-        }
-
-        .form-group {
-            margin-bottom: 30px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3); /* Легкое свечение */
         }
 
         label {
@@ -249,17 +259,25 @@
             font-weight: 600;
             font-size: 1.1rem;
             color: var(--light);
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
         }
 
         input, textarea {
             width: 100%;
             padding: 18px 20px;
             border-radius: 15px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid var(--fortnite-blue); /* Fortnite рамка */
+            background: rgba(0, 0, 0, 0.5); /* Более темный фон полей */
             color: var(--light);
             font-size: 1.1rem;
             transition: all 0.4s ease;
+            box-shadow: inset 0 0 10px rgba(0, 178, 255, 0.2);
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--fortnite-purple);
+            box-shadow: 0 0 15px rgba(0, 178, 255, 0.5); /* Неоновое свечение при фокусе */
+            outline: none;
         }
 
         textarea {
@@ -270,43 +288,43 @@
         .btn {
             display: block;
             width: 100%;
-            padding: 18px;
+            padding: 20px; /* Больше padding */
             background: var(--gradient-fortnite);
             color: white;
             border: none;
             border-radius: 15px;
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-size: 1.3rem; /* Крупнее шрифт */
+            font-weight: 800;
             cursor: pointer;
             transition: all 0.4s ease;
-            margin-top: 20px;
+            margin-top: 30px; /* Увеличенный отступ */
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 178, 255, 0.4);
+            transform: translateY(-7px); /* Более выраженный эффект */
+            box-shadow: 0 15px 35px rgba(0, 178, 255, 0.6);
         }
 
         /* Order Tracking */
-        .tracking-form {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
         .tracking-result {
             margin-top: 30px;
             padding: 30px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            border-left: 5px solid var(--fortnite-blue);
+            background: rgba(255, 255, 255, 0.08); /* Светлее фон */
+            border-radius: 20px; /* Более мягкие углы */
+            border-left: 5px solid var(--fanpay-orange); /* Акцент FunPay */
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
         }
 
         .status-badge {
             display: inline-block;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: 700;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 800;
             margin-bottom: 20px;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
         }
 
         .status-new { background: #f39c12; color: white; }
@@ -314,176 +332,113 @@
         .status-completed { background: #2ecc71; color: white; }
 
         .status-timeline {
-            margin: 25px 0;
+            margin: 30px 0; /* Увеличенный отступ */
             padding-left: 20px;
-            border-left: 3px solid var(--fortnite-blue);
-        }
-
-        .status-step {
-            margin-bottom: 15px;
-            position: relative;
-            padding-left: 30px;
+            border-left: 3px dashed var(--fortnite-purple); /* Пунктирная линия */
         }
 
         .status-step::before {
-            content: '';
-            position: absolute;
-            left: -10px;
-            top: 5px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--fortnite-blue);
+            background: var(--fortnite-purple); /* Цвет по умолчанию */
         }
 
         .status-step.active::before {
             background: var(--success);
-            box-shadow: 0 0 10px var(--success);
+            box-shadow: 0 0 10px var(--success), 0 0 20px var(--success); /* Усиленное свечение */
         }
-
+        
         /* Tracking Code Display */
         .tracking-code-display {
-            background: rgba(0, 178, 255, 0.1);
-            border: 2px solid var(--fortnite-blue);
-            border-radius: 15px;
-            padding: 25px;
-            margin: 25px 0;
+            background: rgba(0, 178, 255, 0.15); /* Более выраженный фон */
+            border: 3px solid var(--fortnite-blue); /* Более толстая рамка */
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
             text-align: center;
             animation: pulse 2s infinite;
+            box-shadow: 0 0 30px rgba(0, 178, 255, 0.3);
         }
 
         .tracking-code {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 900;
-            color: var(--fortnite-blue);
-            margin: 15px 0;
-            letter-spacing: 2px;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid var(--fortnite-blue);
+            color: var(--fanpay-orange); /* Акцент FunPay */
+            margin: 20px 0;
+            letter-spacing: 3px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px dashed var(--fanpay-orange);
+            text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
         }
 
         .copy-btn {
             background: var(--fanpay-orange);
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: 600;
+            padding: 15px 30px; /* Больше padding */
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             margin: 10px 5px;
+            text-transform: uppercase;
         }
 
         .copy-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+            transform: scale(1.05); /* Легкое увеличение */
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.6);
+            background: #ff8c61; /* Светлее при наведении */
         }
 
         .close-btn {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             color: var(--light);
-            border: none;
-            padding: 12px 25px;
-            border-radius: 10px;
-            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 1.2rem;
             cursor: pointer;
             transition: all 0.3s ease;
             margin: 10px 5px;
+            font-weight: 600;
         }
 
         .close-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(0, 178, 255, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(0, 178, 255, 0); }
+            70% { box-shadow: 0 0 0 20px rgba(0, 178, 255, 0); } /* Более крупный пульс */
             100% { box-shadow: 0 0 0 0 rgba(0, 178, 255, 0); }
         }
 
         /* Admin Panel */
-        .admin-panel {
-            display: none;
-        }
-
-        .admin-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .admin-tab {
-            padding: 15px 25px;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            border-radius: 10px;
-            color: var(--light);
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .admin-tab.active {
-            background: var(--gradient-fortnite);
-        }
+        /* Использует общие стили .form-container для красивого фона */
 
         .order-card {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 30px;
             margin-bottom: 25px;
-            border-left: 8px solid var(--fortnite-blue);
+            border-left: 8px solid var(--fanpay-orange); /* Акцент FunPay */
             transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .order-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-8px); /* Более выраженный подъем */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 107, 53, 0.3); /* Неоновый эффект при наведении */
         }
 
         .order-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
         }
-
-        .order-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        .btn-small {
-            padding: 10px 20px;
-            font-size: 1rem;
-            width: auto;
-        }
-
-        .btn-success { background: var(--success); }
-        .btn-warning { background: var(--warning); }
-        .btn-danger { background: #e74c3c; }
-
-        .admin-notes {
-            margin-top: 15px;
-        }
-
-        .notes-input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(0,0,0,0.3);
-            color: var(--light);
-            margin-top: 10px;
-        }
+        
+        /* ... остальные стили админки ... */
 
         /* Notifications */
         .notification {
@@ -496,7 +451,8 @@
             font-weight: 700;
             z-index: 10000;
             transform: translateX(150%);
-            transition: all 0.5s ease;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Пружинящая анимация */
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
         }
 
         .notification.show {
@@ -504,16 +460,13 @@
         }
 
         .notification.success {
-            background: rgba(46, 204, 113, 0.9);
+            background: var(--success);
+            box-shadow: 0 0 25px var(--success);
         }
 
         .notification.error {
-            background: rgba(231, 76, 60, 0.9);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            background: #e74c3c;
+            box-shadow: 0 0 25px #e74c3c;
         }
 
         /* Responsive */
@@ -523,47 +476,46 @@
             .order-header { flex-direction: column; align-items: flex-start; }
             .admin-tabs { flex-direction: column; }
             .sticker { font-size: 3rem; }
-            .tracking-code { font-size: 1.5rem; }
+            .tracking-code { font-size: 1.8rem; }
+            .notification { right: 20px; top: 20px; }
+            .tabs { gap: 10px; }
+            .tab-btn { padding: 12px 20px; font-size: 1rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Animated Background -->
     <div class="animated-bg">
         <div class="floating-element"></div>
         <div class="floating-element"></div>
         <div class="floating-element"></div>
     </div>
 
-    <!-- FunPay Stickers -->
     <div class="stickers-container">
         <div class="sticker funpay">💰</div>
         <div class="sticker fortnite">🎮</div>
         <div class="sticker funpay">⚡</div>
         <div class="sticker fortnite">🛡️</div>
         <div class="sticker funpay">🔥</div>
-    </div>
+        <div class="sticker funpay">FUNPAY</div> </div>
 
     <div class="container">
         <header>
             <h1 class="logo">MIZHWIX SHOP</h1>
-            <p style="font-size: 1.4rem; opacity: 0.9;">Премиум аккаунты Fortnite • Отслеживание заказов</p>
+            <p style="font-size: 1.5rem; opacity: 0.9; font-weight: 600; text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);">🔥 Премиум аккаунты Fortnite • Быстрое Отслеживание</p>
         </header>
 
-        <!-- Tabs for Order/Tracking -->
         <div class="tabs">
-            <button class="tab-btn active" data-tab="order">📦 Сделать заказ</button>
-            <button class="tab-btn" data-tab="tracking">🔍 Отследить заказ</button>
-            <button class="tab-btn" data-tab="admin">🔐 Админ-панель</button>
+            <button class="tab-btn active" data-tab="order">📦 СДЕЛАТЬ ЗАКАЗ</button>
+            <button class="tab-btn" data-tab="tracking">🔍 ОТСЛЕДИТЬ ЗАКАЗ</button>
+            <button class="tab-btn" data-tab="admin">🔐 АДМИН-ПАНЕЛЬ</button>
         </div>
 
-        <!-- Order Tab -->
         <div class="tab-content active" id="order-tab">
             <div class="form-container">
-                <h2 class="form-title">🎮 Форма заказа аккаунта</h2>
+                <h2 class="form-title">🛒 ФОРМА ЗАКАЗА ПРЕМИУМ АККАУНТА</h2>
                 <form id="orderForm">
                     <div class="form-group">
-                        <label for="skins">👕 Скины:</label>
+                        <label for="skins">👕 Скины (через запятую):</label>
                         <textarea id="skins" placeholder="Например: Renegade Raider, Galaxy, IKONIK..." required></textarea>
                     </div>
                     
@@ -578,87 +530,82 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="additional">📝 Дополнительная информация:</label>
+                        <label for="additional">📝 Дополнительная информация/Пожелания:</label>
                         <textarea id="additional" placeholder="Любая дополнительная информация..."></textarea>
                     </div>
                     
                     <div class="form-group">
                         <label for="budget">💰 Бюджет (руб.):</label>
-                        <input type="number" id="budget" placeholder="Введите сумму" min="0" required>
+                        <input type="number" id="budget" placeholder="Введите максимальную сумму" min="0" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="funpayNick">👤 Ник на FunPay:</label>
+                        <label for="funpayNick">👤 Ник на FunPay (для связи!):</label>
                         <input type="text" id="funpayNick" placeholder="Ваш ник на FunPay" required>
                     </div>
                     
-                    <button type="submit" class="btn">🚀 Отправить заказ</button>
+                    <button type="submit" class="btn">🚀 ОТПРАВИТЬ ПРЕМИУМ ЗАКАЗ</button>
                 </form>
 
-                <!-- Tracking Code Display (shown after order) -->
                 <div id="trackingCodeDisplay" class="tracking-code-display" style="display: none;">
-                    <h3 style="color: var(--fortnite-blue); margin-bottom: 15px;">🎉 Заказ успешно создан!</h3>
-                    <p>Сохраните код для отслеживания заказа:</p>
+                    <h3 style="color: var(--fortnite-blue); margin-bottom: 15px; font-weight: 800; text-transform: uppercase;">🎉 Заказ УСПЕШНО создан!</h3>
+                    <p style="font-size: 1.1rem; opacity: 0.9;">Обязательно сохраните свой **УНИКАЛЬНЫЙ** код отслеживания:</p>
                     <div class="tracking-code" id="displayTrackingCode"></div>
                     <div>
                         <button class="copy-btn" onclick="copyTrackingCode()">
-                            📋 Скопировать код
+                            📋 СКОПИРОВАТЬ КОД
                         </button>
                         <button class="close-btn" onclick="closeTrackingCode()">
-                            ✕ Скрыть
+                            ✕ СКРЫТЬ
                         </button>
                     </div>
-                    <p style="margin-top: 15px; opacity: 0.8; font-size: 0.9rem;">
-                        🔍 Используйте этот код во вкладке "Отследить заказ"
+                    <p style="margin-top: 20px; opacity: 0.8; font-size: 0.9rem;">
+                        **🔍 Используйте этот код во вкладке "Отследить заказ"**
                     </p>
                 </div>
             </div>
         </div>
 
-        <!-- Tracking Tab -->
         <div class="tab-content" id="tracking-tab">
             <div class="form-container">
-                <h2 class="form-title">🔍 Отслеживание заказа</h2>
+                <h2 class="form-title">🔍 ОТСЛЕЖИВАНИЕ ЗАКАЗА</h2>
                 <div class="tracking-form">
                     <div class="form-group">
-                        <label for="trackingCode">🔢 Код отслеживания:</label>
-                        <input type="text" id="trackingCode" placeholder="Введите код из письма">
+                        <label for="trackingCode">🔢 Введите Код отслеживания:</label>
+                        <input type="text" id="trackingCode" placeholder="Например: MZ1B82G45F">
                     </div>
-                    <button id="trackOrder" class="btn">📊 Найти заказ</button>
+                    <button id="trackOrder" class="btn">📊 НАЙТИ ЗАКАЗ</button>
                     
                     <div id="trackingResult" class="tracking-result" style="display: none;">
-                        <!-- Tracking info will appear here -->
-                    </div>
+                        </div>
                 </div>
             </div>
         </div>
 
-        <!-- Admin Tab -->
         <div class="tab-content" id="admin-tab">
             <div class="form-container" id="adminLoginContainer">
-                <h2 class="form-title">🔐 Вход в админ-панель</h2>
+                <h2 class="form-title">🔐 ВХОД В АДМИН-ПАНЕЛЬ</h2>
                 <div class="form-group">
                     <label for="adminPassword">🔑 Пароль:</label>
                     <input type="password" id="adminPassword" placeholder="Введите пароль">
                 </div>
-                <button id="adminLogin" class="btn">📊 Войти в админ-панель</button>
+                <button id="adminLogin" class="btn">📊 ВОЙТИ</button>
             </div>
 
             <div class="admin-panel" id="adminPanel">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 20px;">
-                    <h2 class="form-title">📊 Админ-панель</h2>
-                    <button id="logoutBtn" class="btn btn-danger" style="width: auto; padding: 12px 25px;">🚪 Выйти</button>
+                    <h2 class="form-title" style="margin-bottom: 0;">📊 АДМИН-ПАНЕЛЬ</h2>
+                    <button id="logoutBtn" class="btn btn-danger" style="width: auto; padding: 12px 25px;">🚪 ВЫЙТИ</button>
                 </div>
                 
                 <div class="admin-tabs">
-                    <button class="admin-tab active" data-admin-tab="new">🆕 Новые заказы</button>
-                    <button class="admin-tab" data-admin-tab="processing">🔄 В обработке</button>
-                    <button class="admin-tab" data-admin-tab="completed">✅ Выполненные</button>
+                    <button class="admin-tab active" data-admin-tab="new">🆕 НОВЫЕ ЗАКАЗЫ</button>
+                    <button class="admin-tab" data-admin-tab="processing">🔄 В ОБРАБОТКЕ</button>
+                    <button class="admin-tab" data-admin-tab="completed">✅ ВЫПОЛНЕННЫЕ</button>
                 </div>
                 
                 <div id="adminOrdersList">
-                    <!-- Orders will appear here -->
-                </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -736,7 +683,7 @@
         }
 
         // Copy Tracking Code
-        function copyTrackingCode() {
+        window.copyTrackingCode = function() {
             const code = displayTrackingCode.textContent;
             navigator.clipboard.writeText(code).then(() => {
                 showNotification('📋 Код скопирован в буфер обмена!');
@@ -753,7 +700,7 @@
         }
 
         // Close Tracking Code Display
-        function closeTrackingCode() {
+        window.closeTrackingCode = function() {
             trackingCodeDisplay.style.display = 'none';
         }
 
@@ -763,7 +710,7 @@
             
             const submitBtn = orderForm.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '⏳ Отправка...';
+            submitBtn.innerHTML = '⏳ ОТПРАВКА...';
             submitBtn.disabled = true;
 
             try {
@@ -822,44 +769,32 @@
                 }
 
                 const order = snapshot.docs[0].data();
-                const orderId = snapshot.docs[0].id;
                 
                 let statusText = '';
                 let statusClass = '';
                 let timeline = '';
                 
-                switch(order.status) {
-                    case 'new':
-                        statusText = '🆕 Не просмотрен';
-                        statusClass = 'status-new';
-                        timeline = `
-                            <div class="status-step active">📝 Заказ создан</div>
-                            <div class="status-step">👀 Ожидает просмотра</div>
-                            <div class="status-step">⚡ В обработке</div>
-                            <div class="status-step">✅ Выполнен</div>
-                        `;
-                        break;
-                    case 'processing':
-                        statusText = '🔄 В обработке';
-                        statusClass = 'status-processing';
-                        timeline = `
-                            <div class="status-step active">📝 Заказ создан</div>
-                            <div class="status-step active">👀 Просмотрен</div>
-                            <div class="status-step active">⚡ В обработке</div>
-                            <div class="status-step">✅ Выполнен</div>
-                        `;
-                        break;
-                    case 'completed':
-                        statusText = '✅ Выполнен';
-                        statusClass = 'status-completed';
-                        timeline = `
-                            <div class="status-step active">📝 Заказ создан</div>
-                            <div class="status-step active">👀 Просмотрен</div>
-                            <div class="status-step active">⚡ В обработке</div>
-                            <div class="status-step active">✅ Выполнен</div>
-                        `;
-                        break;
-                }
+                const statusMap = {
+                    'new': { text: '🆕 Не просмотрен', class: 'status-new', steps: [true, false, false, false] },
+                    'processing': { text: '🔄 В обработке', class: 'status-processing', steps: [true, true, true, false] },
+                    'completed': { text: '✅ Выполнен', class: 'status-completed', steps: [true, true, true, true] }
+                };
+
+                const currentStatus = statusMap[order.status] || statusMap['new'];
+                statusText = currentStatus.text;
+                statusClass = currentStatus.class;
+                
+                const timelineSteps = [
+                    { label: '📝 Заказ создан', active: currentStatus.steps[0] },
+                    { label: '👀 Просмотрен', active: currentStatus.steps[1] },
+                    { label: '⚡ В обработке', active: currentStatus.steps[2] },
+                    { label: '✅ Выполнен', active: currentStatus.steps[3] }
+                ];
+
+                timeline = timelineSteps.map(step => 
+                    `<div class="status-step ${step.active ? 'active' : ''}">${step.label}</div>`
+                ).join('');
+
 
                 trackingResult.innerHTML = `
                     <div class="status-badge ${statusClass}">${statusText}</div>
@@ -870,7 +805,7 @@
                     <div class="status-timeline">
                         ${timeline}
                     </div>
-                    <p><em>ℹ️ Статус обновляется автоматически.</em></p>
+                    <p><em>ℹ️ Статус обновляется автоматически. Спасибо за доверие FUNPAY!</em></p>
                 `;
                 trackingResult.style.display = 'block';
                 
@@ -897,140 +832,122 @@
         logoutBtn.addEventListener('click', function() {
             adminPanel.style.display = 'none';
             adminLoginContainer.style.display = 'block';
+            adminPassword.value = ''; // Очистка пароля
             showNotification('👋 Вы вышли из системы');
         });
 
         // Load Admin Orders
         function loadAdminOrders() {
             const ordersList = document.getElementById('adminOrdersList');
-            ordersList.innerHTML = '<div style="text-align: center; padding: 40px;">⏳ Загружаем заказы...</div>';
+            ordersList.innerHTML = ''; // Clear previous orders
 
-            let query = db.collection('orders').orderBy('timestamp', 'desc');
-            
-            if (currentAdminTab === 'new') {
-                query = query.where('status', '==', 'new');
-            } else if (currentAdminTab === 'processing') {
-                query = query.where('status', '==', 'processing');
-            } else if (currentAdminTab === 'completed') {
-                query = query.where('status', '==', 'completed');
-            }
+            db.collection('orders')
+                .where('status', '==', currentAdminTab)
+                .orderBy('timestamp', 'desc')
+                .get()
+                .then(snapshot => {
+                    if (snapshot.empty) {
+                        ordersList.innerHTML = `<div class="order-card" style="text-align: center;">Нет заказов со статусом: **${currentAdminTab.toUpperCase()}**</div>`;
+                        return;
+                    }
 
-            query.onSnapshot(snapshot => {
-                ordersList.innerHTML = '';
-                
-                if (snapshot.empty) {
-                    ordersList.innerHTML = `
-                        <div class="form-container" style="text-align: center;">
-                            <h3>📭 Заказов нет</h3>
-                            <p>В этой категории пока нет заказов</p>
-                        </div>
-                    `;
-                    return;
-                }
-
-                snapshot.forEach(doc => {
-                    const order = doc.data();
-                    const orderCard = document.createElement('div');
-                    orderCard.className = 'order-card';
-                    orderCard.innerHTML = `
-                        <div class="order-header">
-                            <div>
-                                <strong style="color: var(--fortnite-blue); font-size: 1.3rem;">🎯 Заказ #${doc.id.slice(-6)}</strong>
-                                <div style="margin-top: 5px; opacity: 0.8;">🔢 Код: ${order.trackingCode}</div>
-                            </div>
-                            <div style="text-align: right;">
-                                <div>📅 ${order.timestamp ? new Date(order.timestamp.toDate()).toLocaleString('ru-RU') : 'Не указана'}</div>
-                                <div style="margin-top: 5px;"><strong>👤 ${order.funpayNick}</strong></div>
-                            </div>
-                        </div>
+                    snapshot.docs.forEach(doc => {
+                        const order = doc.data();
+                        const orderId = doc.id;
                         
-                        <div style="margin-top: 20px;">
-                            <div style="margin-bottom: 12px;"><strong>👕 Скины:</strong> ${order.skins}</div>
-                            <div style="margin-bottom: 12px;"><strong>⛏️ Кирки:</strong> ${order.picks}</div>
-                            <div style="margin-bottom: 12px;"><strong>💃 Эмоции:</strong> ${order.emotes}</div>
-                            <div style="margin-bottom: 12px;"><strong>💰 Бюджет:</strong> ${order.budget} руб.</div>
-                            ${order.additional ? `<div style="margin-bottom: 12px;"><strong>📝 Доп. информация:</strong> ${order.additional}</div>` : ''}
-                            <div style="margin-bottom: 12px;">
-                                <strong>📊 Статус:</strong> 
-                                <span style="color: ${
-                                    order.status === 'new' ? '#f39c12' : 
-                                    order.status === 'processing' ? '#3498db' : '#2ecc71'
-                                }; font-weight: 700;">
-                                    ${order.status === 'new' ? '🆕 Новый' : order.status === 'processing' ? '🔄 В обработке' : '✅ Выполнен'}
-                                </span>
+                        let statusText = '';
+                        let statusColor = '';
+
+                        switch(order.status) {
+                            case 'new': statusText = 'НОВЫЙ'; statusColor = 'var(--warning)'; break;
+                            case 'processing': statusText = 'В ОБРАБОТКЕ'; statusColor = 'var(--secondary)'; break;
+                            case 'completed': statusText = 'ВЫПОЛНЕН'; statusColor = 'var(--success)'; break;
+                        }
+
+                        const card = document.createElement('div');
+                        card.className = 'order-card';
+                        card.style.borderLeftColor = statusColor;
+                        card.innerHTML = `
+                            <div class="order-header">
+                                <h3 style="color: ${statusColor};">ID: ${orderId.substring(0, 6)}... (${order.trackingCode})</h3>
+                                <div class="status-badge" style="background: ${statusColor};">${statusText}</div>
                             </div>
-                        </div>
-
-                        <div class="admin-notes">
-                            <strong>💬 Комментарий админа:</strong>
-                            <textarea class="notes-input" placeholder="Добавьте комментарий для клиента..." id="notes-${doc.id}">${order.adminNotes || ''}</textarea>
-                            <button onclick="saveAdminNotes('${doc.id}')" class="btn btn-small" style="margin-top: 10px;">💾 Сохранить комментарий</button>
-                        </div>
-
-                        <div class="order-actions">
-                            ${order.status !== 'processing' && order.status !== 'completed' ? 
-                                `<button onclick="updateOrderStatus('${doc.id}', 'processing')" class="btn btn-small btn-warning">
-                                    🔄 В обработку
-                                </button>` : ''}
-                            ${order.status !== 'completed' ? 
-                                `<button onclick="updateOrderStatus('${doc.id}', 'completed')" class="btn btn-small btn-success">
-                                    ✅ Выполнить
-                                </button>` : ''}
-                            <button onclick="deleteOrder('${doc.id}')" class="btn btn-small btn-danger">
-                                🗑️ Удалить
-                            </button>
-                        </div>
-                    `;
-                    ordersList.appendChild(orderCard);
+                            <p><strong>👤 Ник FunPay:</strong> ${order.funpayNick}</p>
+                            <p><strong>💰 Бюджет:</strong> ${order.budget} руб.</p>
+                            <p><strong>📅 Дата:</strong> ${order.timestamp ? new Date(order.timestamp.toDate()).toLocaleString('ru-RU') : 'Не указана'}</p>
+                            <p style="margin-top: 10px;"><strong>👕 Скины:</strong> ${order.skins}</p>
+                            <p><strong>⛏️ Кирки:</strong> ${order.picks}</p>
+                            <p><strong>💃 Эмоции:</strong> ${order.emotes}</p>
+                            ${order.additional ? `<p><strong>📝 Доп. инфо:</strong> ${order.additional}</p>` : ''}
+                            <div class="admin-notes">
+                                <strong>💬 Заметки Админа:</strong>
+                                <textarea id="notes-${orderId}" class="notes-input" placeholder="Добавить/Изменить заметки">${order.adminNotes || ''}</textarea>
+                            </div>
+                            <div class="order-actions">
+                                <button class="btn btn-small btn-success" onclick="updateOrderStatus('${orderId}', 'completed')">✅ Выполнить</button>
+                                <button class="btn btn-small btn-warning" onclick="updateOrderStatus('${orderId}', 'processing')">🔄 В Обработке</button>
+                                <button class="btn btn-small btn-danger" onclick="deleteOrder('${orderId}')">🗑️ Удалить</button>
+                                <button class="btn btn-small" style="background: var(--fortnite-blue); margin-top: 0;" onclick="saveAdminNotes('${orderId}')">💾 Сохранить Заметки</button>
+                            </div>
+                        `;
+                        ordersList.appendChild(card);
+                    });
+                })
+                .catch(error => {
+                    console.error("Ошибка загрузки заказов: ", error);
+                    ordersList.innerHTML = `<div class="order-card" style="color: #e74c3c;">❌ Ошибка загрузки заказов.</div>`;
                 });
-            }, error => {
-                console.error('Ошибка загрузки:', error);
-                ordersList.innerHTML = '<div style="text-align: center; padding: 40px; color: #e74c3c;">❌ Ошибка загрузки заказов</div>';
-            });
         }
 
         // Update Order Status
-        window.updateOrderStatus = async function(orderId, status) {
-            try {
-                await db.collection('orders').doc(orderId).update({
-                    status: status,
-                    statusUpdated: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                showNotification(`✅ Статус заказа обновлен на: ${status === 'processing' ? 'В обработке' : 'Выполнен'}`);
-                loadAdminOrders();
-            } catch (error) {
-                console.error('Ошибка:', error);
+        window.updateOrderStatus = function(orderId, newStatus) {
+            db.collection('orders').doc(orderId).update({
+                status: newStatus
+            })
+            .then(() => {
+                showNotification(`✅ Статус заказа ${orderId.substring(0, 6)}... обновлен на: ${newStatus.toUpperCase()}`);
+                loadAdminOrders(); // Reload orders for the current tab
+            })
+            .catch(error => {
+                console.error("Ошибка обновления статуса: ", error);
                 showNotification('❌ Ошибка обновления статуса', 'error');
-            }
-        };
-
-        // Save Admin Notes
-        window.saveAdminNotes = async function(orderId) {
-            const notes = document.getElementById(`notes-${orderId}`).value;
-            try {
-                await db.collection('orders').doc(orderId).update({
-                    adminNotes: notes
-                });
-                showNotification('💾 Комментарий сохранен!');
-            } catch (error) {
-                console.error('Ошибка:', error);
-                showNotification('❌ Ошибка сохранения комментария', 'error');
-            }
-        };
+            });
+        }
 
         // Delete Order
-        window.deleteOrder = async function(orderId) {
-            if (confirm('⚠️ Удалить этот заказ?')) {
-                try {
-                    await db.collection('orders').doc(orderId).delete();
-                    showNotification('🗑️ Заказ удален!');
-                    loadAdminOrders();
-                } catch (error) {
-                    console.error('Ошибка:', error);
-                    showNotification('❌ Ошибка удаления заказа', 'error');
-                }
+        window.deleteOrder = function(orderId) {
+            if (!confirm(`Вы уверены, что хотите удалить заказ ${orderId.substring(0, 6)}...?`)) {
+                return;
             }
-        };
+
+            db.collection('orders').doc(orderId).delete()
+            .then(() => {
+                showNotification(`🗑️ Заказ ${orderId.substring(0, 6)}... удален`);
+                loadAdminOrders();
+            })
+            .catch(error => {
+                console.error("Ошибка удаления заказа: ", error);
+                showNotification('❌ Ошибка удаления заказа', 'error');
+            });
+        }
+        
+        // Save Admin Notes
+        window.saveAdminNotes = function(orderId) {
+            const notesTextarea = document.getElementById(`notes-${orderId}`);
+            const notes = notesTextarea ? notesTextarea.value : '';
+
+            db.collection('orders').doc(orderId).update({
+                adminNotes: notes
+            })
+            .then(() => {
+                showNotification(`💾 Заметки для заказа ${orderId.substring(0, 6)}... сохранены!`);
+                // No need to reload orders, just update UI if necessary
+            })
+            .catch(error => {
+                console.error("Ошибка сохранения заметок: ", error);
+                showNotification('❌ Ошибка сохранения заметок', 'error');
+            });
+        }
     </script>
 </body>
 </html>
