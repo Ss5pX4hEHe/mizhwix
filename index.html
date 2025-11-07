@@ -5,41 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MIZHWIX SHOP - Премиум аккаунты Fortnite</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght=300;400;600;700;800;900&family=Roboto:wght=300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Roboto:wght=300;400;500;700&display=swap" rel="stylesheet">
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
     <style>
-        /* --- Основные переменные (ТЕМНЫЙ РЕЖИМ по умолчанию) --- */
+        /* --- Основные переменные (Теперь это ТЕМНЫЙ РЕЖИМ по умолчанию) --- */
         :root {
-            /* Fonts */
-            --font-main: 'Poppins', sans-serif;
-            --font-secondary: 'Roboto', sans-serif;
-
-            /* Colors (Less Harsh Neon) */
+            /* Dark Mode Defaults */
             --bg-start: #0a0a0a;
-            --bg-end: #1a0f2b; 
+            --bg-end: #1a0f2b; /* Глубокий фиолетово-черный */
             --main-text: #e0e0e0;
             --secondary-text: #b0b0b0;
-            --container-bg: rgba(0, 0, 0, 0.5);
-            --container-border: rgba(156, 39, 176, 0.15); 
-            --container-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(156, 39, 176, 0.1); /* СВЕЧЕНИЕ МЕНЬШЕ */
-            --input-bg: rgba(0, 0, 0, 0.6);
-            --input-border: #9C27B0;
-            --input-focus-shadow: 0 0 10px rgba(156, 39, 176, 0.35); /* СВЕЧЕНИЕ МЕНЬШЕ */
+            --container-bg: rgba(0, 0, 0, 0.6);
+            --container-border: rgba(156, 39, 176, 0.3); /* Фиолетовый */
+            --container-shadow: 0 15px 45px rgba(0, 0, 0, 0.7), 0 0 40px rgba(156, 39, 176, 0.3);
+            --input-bg: rgba(0, 0, 0, 0.8);
+            --input-border: #9C27B0; /* Фиолетовый */
+            --input-focus-shadow: 0 0 20px rgba(156, 39, 176, 0.7);
 
-            --logo-gradient: linear-gradient(45deg, #76FF03, #9C27B0);
+            --logo-gradient: linear-gradient(45deg, #76FF03, #9C27B0); /* Зеленый-Фиолетовый */
             --btn-gradient: linear-gradient(45deg, #76FF03, #9C27B0);
+            --btn-hover-shadow: 0 20px 40px rgba(118, 255, 3, 0.7);
+            --tab-btn-bg: rgba(156, 39, 176, 0.1);
+            --tab-btn-border: rgba(118, 255, 3, 0.3);
+            --tab-btn-hover-bg: rgba(118, 255, 3, 0.15);
+            --tab-btn-active-shadow: 0 10px 30px rgba(118, 255, 3, 0.5);
+            --tracking-code-display-bg: rgba(118, 255, 3, 0.1);
+            --tracking-code-display-border: #76FF03;
+            --tracking-code-display-shadow: 0 0 35px rgba(118, 255, 3, 0.4);
+            --tracking-code-bg: rgba(0, 0, 0, 0.7);
+            --tracking-code-text: #9C27B0; /* Фиолетовый код */
+            --tracking-code-border: dashed #9C27B0;
+            --status-new: #FFAB40; /* Оранжевый */
+            --status-processing: #3498db; /* Синий */
+            --status-completed: #2ecc71; /* Зеленый */
+            --order-card-border-left: #9C27B0;
+            --notification-success: #2ecc71;
+            --notification-error: #e74c3c;
+            
+            /* Sticker colors */
             --sticker-color-1: #76FF03;
             --sticker-color-2: #9C27B0;
-            
-            /* --- ПЛАВНОСТЬ --- */
-            --transition-time: 0.8s;
-            --transition-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Мягкое ускорение-замедление */
+            --close-btn-bg: rgba(255, 255, 255, 0.08);
+            --close-btn-border: rgba(255, 255, 255, 0.1);
         }
 
-        /* --- Light Mode Specific Styles --- */
+        /* --- Light Mode Specific Styles (Переопределяет переменные root) --- */
         body.light-mode {
             /* Light Mode Overrides */
             --bg-start: #f8f8f8;
@@ -48,17 +61,31 @@
             --secondary-text: #5a5a5a;
             --container-bg: rgba(255, 255, 255, 0.9);
             --container-border: rgba(0, 0, 0, 0.1);
-            --container-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            --container-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             --input-bg: rgba(0, 0, 0, 0.05);
-            --input-border: #FF4081;
-            --input-focus-shadow: 0 0 10px rgba(255, 64, 129, 0.3);
+            --input-border: #FF4081; /* Красный акцент */
+            --input-focus-shadow: 0 0 15px rgba(255, 64, 129, 0.4);
 
-            --logo-gradient: linear-gradient(45deg, #FF4081, #FFAB40);
+            --logo-gradient: linear-gradient(45deg, #FF4081, #FFAB40); /* Красный-Оранжевый */
             --btn-gradient: linear-gradient(45deg, #FF4081, #FFAB40);
+            --btn-hover-shadow: 0 15px 35px rgba(255, 64, 129, 0.6);
+            --tab-btn-bg: rgba(0, 0, 0, 0.05);
+            --tab-btn-border: rgba(255, 64, 129, 0.2);
+            --tab-btn-hover-bg: rgba(255, 64, 129, 0.1);
+            --tab-btn-active-shadow: 0 8px 25px rgba(255, 64, 129, 0.4);
+            --tracking-code-display-bg: rgba(255, 64, 129, 0.15);
+            --tracking-code-display-border: #FF4081;
+            --tracking-code-display-shadow: 0 0 30px rgba(255, 64, 129, 0.3);
+            --tracking-code-bg: rgba(0, 0, 0, 0.1);
+            --tracking-code-text: #FFAB40; /* Оранжевый код */
+            --tracking-code-border: dashed #FFAB40;
+            --order-card-border-left: #FFAB40;
             
             /* Sticker colors */
             --sticker-color-1: #FF4081;
             --sticker-color-2: #FFAB40;
+            --close-btn-bg: rgba(0, 0, 0, 0.15);
+            --close-btn-border: rgba(0, 0, 0, 0.2);
         }
 
         /* --- Общие стили --- */
@@ -69,77 +96,252 @@
         }
 
         body {
-            font-family: var(--font-secondary);
+            font-family: 'Roboto', sans-serif;
+            /* Используем переменные ROOT (т.е. темный режим) */
             background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
             color: var(--main-text);
             min-height: 100vh;
             overflow-x: hidden;
             line-height: 1.6;
-            /* ОЧЕНЬ ПЛАВНЫЙ ПЕРЕХОД ФОНА И ЦВЕТОВ */
-            transition: background var(--transition-time) var(--transition-ease), color var(--transition-time) var(--transition-ease);
+            transition: background 0.5s ease, color 0.5s ease;
         }
 
-        /* Header & Logo */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.15;
+            overflow: hidden;
+        }
+
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--sticker-color-1), var(--sticker-color-2));
+            box-shadow: 0 0 50px var(--sticker-color-1);
+            animation: float 20s infinite ease-in-out;
+            opacity: 0.8;
+            filter: blur(5px);
+            transition: background 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 20%;
+            right: 10%;
+            animation-delay: 5s;
+            background: linear-gradient(135deg, var(--sticker-color-2), var(--sticker-color-1));
+        }
+
+        .floating-element:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            bottom: 10%;
+            left: 20%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg) scale(1);
+            }
+            33% {
+                transform: translateY(-30px) rotate(120deg) scale(1.1);
+            }
+            66% {
+                transform: translateY(20px) rotate(240deg) scale(0.9);
+            }
+        }
+
+        /* FunPay/Fortnite Stickers */
+        .stickers-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .sticker {
+            position: absolute;
+            font-size: 4rem;
+            opacity: 0.08;
+            animation: stickerFloat 30s infinite linear;
+            filter: blur(0.5px);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            white-space: nowrap;
+            transition: color 0.5s ease;
+        }
+
+        .sticker:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; font-size: 5rem; color: var(--sticker-color-1); }
+        .sticker:nth-child(2) { top: 20%; right: 8%; animation-delay: 6s; color: var(--sticker-color-2); }
+        .sticker:nth-child(3) { bottom: 15%; left: 10%; animation-delay: 12s; font-size: 6rem; opacity: 0.1; color: var(--sticker-color-1); }
+        .sticker:nth-child(4) { bottom: 25%; right: 5%; animation-delay: 18s; color: var(--sticker-color-2); }
+        .sticker:nth-child(5) { top: 40%; left: 15%; animation-delay: 24s; color: var(--sticker-color-1); }
+        .sticker:nth-child(6) { bottom: 5%; right: 40%; animation-delay: 30s; color: var(--sticker-color-2); font-size: 5rem; opacity: 0.15; }
+
+        @keyframes stickerFloat {
+            0% { transform: translateY(0) rotate(0deg) scale(1); }
+            25% { transform: translateY(-40px) rotate(15deg) scale(1.1); }
+            50% { transform: translateY(0) rotate(0deg) scale(1); }
+            75% { transform: translateY(40px) rotate(-15deg) scale(0.9); }
+            100% { transform: translateY(0) rotate(0deg) scale(1); }
+        }
+
+        /* Header */
+        header {
+            padding: 50px 0 30px;
+            position: relative;
+            text-align: center;
+        }
+
         .logo {
-            font-family: var(--font-main);
+            font-family: 'Montserrat', sans-serif;
             font-size: 4.5rem;
             font-weight: 900;
             background: var(--logo-gradient);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 0 15px rgba(118, 255, 3, 0.2); /* СВЕЧЕНИЕ МЕНЬШЕ */
+            text-shadow: 0 0 50px var(--sticker-color-1);
             animation: glow 3s infinite alternate;
-            /* ОЧЕНЬ ПЛАВНЫЙ ПЕРЕХОД */
-            transition: all var(--transition-time) var(--transition-ease);
-            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background 0.5s ease, text-shadow 0.5s ease;
+            cursor: pointer; /* Для скрытого триггера админки */
         }
 
         @keyframes glow {
-            0% { text-shadow: 0 0 10px rgba(118, 255, 3, 0.2); } 
-            100% { text-shadow: 0 0 25px rgba(118, 255, 3, 0.4); }
-        }
-        body.light-mode @keyframes glow {
-             0% { text-shadow: 0 0 10px rgba(255, 64, 129, 0.2); }
-             100% { text-shadow: 0 0 25px rgba(255, 64, 129, 0.4); }
+            0% { text-shadow: 0 0 20px var(--sticker-color-1); }
+            100% { text-shadow: 0 0 40px var(--sticker-color-1); }
         }
         
-        /* Tabs (Вкладки) */
+        /* Theme Toggle */
+        .theme-switch-wrapper {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .theme-switch-wrapper em {
+            margin-right: 10px;
+            font-style: normal;
+            font-weight: 600;
+            color: var(--main-text);
+            transition: color 0.5s ease;
+        }
+        .theme-switch {
+            display: inline-block;
+            height: 34px;
+            position: relative;
+            width: 60px;
+        }
+        .theme-switch input {
+            display:none;
+        }
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+        }
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 26px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+        }
+        input:checked + .slider {
+            background-color: #FF4081; /* Pink for Light Mode On */
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .slider.round {
+            border-radius: 34px;
+        }
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        /* Скрытая кнопка для админа */
+        #admin-tab-btn {
+            display: none;
+        }
+
         .tab-btn {
             padding: 15px 35px;
-            background: rgba(156, 39, 176, 0.1); /* Фиолетовый полупрозрачный фон */
-            border: 2px solid rgba(118, 255, 3, 0.15); /* Еле заметный зелёный контур */
+            background: var(--tab-btn-bg);
+            border: 2px solid var(--tab-btn-border);
             border-radius: 12px;
             color: var(--secondary-text);
             font-size: 1.15rem;
             font-weight: 700;
             cursor: pointer;
-            /* ОЧЕНЬ ПЛАВНЫЙ ПЕРЕХОД */
-            transition: all 0.6s var(--transition-ease);
+            transition: all 0.3s ease;
             text-transform: uppercase;
         }
 
         .tab-btn:hover {
-            background: rgba(118, 255, 3, 0.1);
-            transform: translateY(-3px); /* Легкий подъем */
-            /* ПЛАВНОЕ "ЗАГОРАНИЕ" КНОПКИ */
-            box-shadow: 0 0 25px rgba(118, 255, 3, 0.4); 
-            color: var(--main-text);
+            background: var(--tab-btn-hover-bg);
+            box-shadow: 0 0 20px var(--sticker-color-1);
         }
 
         .tab-btn.active {
             background: var(--btn-gradient);
-            transform: translateY(-5px); /* Больше подъем, чтобы выделить */
-            /* ЯРКИЙ, НО НЕ КРИЧАЩИЙ ШЭДОУ */
-            box-shadow: 0 8px 30px rgba(118, 255, 3, 0.4), 0 0 25px rgba(156, 39, 176, 0.4);
+            transform: translateY(-3px);
+            box-shadow: var(--tab-btn-active-shadow);
             border: none;
             color: white;
         }
-        
-        /* Forms */
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Forms (Glassmorphism + Neon) */
         .form-container {
-            /* ОЧЕНЬ ПЛАВНЫЙ ПЕРЕХОД ФОНА */
-            transition: all var(--transition-time) var(--transition-ease);
             background: var(--container-bg);
             backdrop-filter: blur(25px);
             border-radius: 25px;
@@ -148,28 +350,52 @@
             max-width: 850px;
             box-shadow: var(--container-shadow);
             border: 1px solid var(--container-border);
+            transition: all 0.5s ease;
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--main-text);
+            text-shadow: 0 0 15px var(--sticker-color-1);
+            transition: color 0.5s ease, text-shadow 0.5s ease;
         }
 
         label {
-            font-family: var(--font-main);
-            /* ОЧЕНЬ ПЛАВНЫЙ ПЕРЕХОД ЦВЕТА */
-            transition: color var(--transition-time) var(--transition-ease), text-shadow var(--transition-time) var(--transition-ease);
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--main-text);
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            transition: color 0.5s ease, text-shadow 0.5s ease;
         }
 
         input, textarea {
-            /* ОЧЕНЬ ПЛАВНЫЙ ПЕРЕХОД */
-            transition: all 0.5s var(--transition-ease);
+            width: 100%;
+            padding: 18px 20px;
+            border-radius: 15px;
             border: 2px solid var(--input-border);
             background: var(--input-bg);
             color: var(--main-text);
+            font-size: 1.1rem;
+            transition: all 0.4s ease;
+            box-shadow: inset 0 0 10px var(--container-border);
         }
 
         input:focus, textarea:focus {
+            border-color: var(--input-border);
             box-shadow: var(--input-focus-shadow);
+            outline: none;
         }
 
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
 
-        /* Main Button (.btn) */
         .btn {
             display: block;
             width: 100%;
@@ -181,102 +407,284 @@
             font-size: 1.3rem;
             font-weight: 800;
             cursor: pointer;
-            /* ОЧЕНЬ ПЛАВНЫЙ ПЕРЕХОД КНОПКИ */
-            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); /* Упругий переход */
+            transition: all 0.4s ease;
             margin-top: 30px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .btn:hover {
-            transform: translateY(-7px); /* Сделали более агрессивным/красивым */
-            /* ПЛАВНОЕ "ЗАГОРАНИЕ" КНОПКИ */
-            box-shadow: 0 15px 35px rgba(118, 255, 3, 0.6); /* Более заметное свечение */
-        }
-        body.light-mode .btn:hover {
-            box-shadow: 0 15px 35px rgba(255, 64, 129, 0.6);
+            transform: translateY(-7px);
+            box-shadow: var(--btn-hover-shadow);
         }
 
         /* Order Tracking */
+        .tracking-result {
+            margin-top: 30px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.08);
+            border-radius: 20px;
+            border-left: 5px solid var(--tracking-code-text);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transition: background 0.5s ease, border-left-color 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .status-new { background: var(--status-new); color: white; }
+        .status-processing { background: var(--status-processing); color: white; }
+        .status-completed { background: var(--status-completed); color: white; }
+
+        .status-timeline {
+            margin: 30px 0;
+            padding-left: 20px;
+            border-left: 3px dashed var(--input-border);
+            transition: border-left-color 0.5s ease;
+        }
+
+        .status-step {
+            position: relative;
+            padding: 8px 0;
+            font-weight: 500;
+            color: var(--secondary-text);
+            transition: color 0.5s ease;
+        }
+        .status-step::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #999; /* Default */
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .status-step.active::before {
+            background: var(--status-completed);
+            box-shadow: 0 0 10px var(--status-completed), 0 0 20px rgba(46, 204, 113, 0.5);
+        }
+        .status-step.active {
+            color: var(--main-text);
+        }
+        
+        /* Tracking Code Display */
         .tracking-code-display {
-            /* ПУЛЬСАЦИЯ МЕНЕЕ АГРЕССИВНАЯ */
-            animation: pulse 2.5s infinite var(--transition-ease);
-            box-shadow: 0 0 20px rgba(118, 255, 3, 0.2);
+            background: var(--tracking-code-display-bg);
+            border: 3px solid var(--tracking-code-display-border);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+            animation: pulse 2s infinite;
+            box-shadow: var(--tracking-code-display-shadow);
+            transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .tracking-code {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--tracking-code-text);
+            margin: 20px 0;
+            letter-spacing: 3px;
+            background: var(--tracking-code-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px var(--tracking-code-border);
+            text-shadow: 0 0 10px var(--sticker-color-2);
+            transition: background 0.5s ease, color 0.5s ease, border-color 0.5s ease, text-shadow 0.5s ease;
+        }
+
+        .copy-btn {
+            background: var(--sticker-color-2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+            text-transform: uppercase;
+        }
+
+        .copy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px var(--sticker-color-2);
+            background: #ab47bc; /* Чуть светлее */
+        }
+
+        .close-btn {
+            background: var(--close-btn-bg);
+            color: var(--main-text);
+            border: 1px solid var(--close-btn-border);
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+            font-weight: 600;
+        }
+        
+        body.light-mode .close-btn:hover {
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        body:not(.light-mode) .close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(118, 255, 3, 0.2); } 
-            70% { box-shadow: 0 0 0 15px rgba(118, 255, 3, 0); } 
+            0% { box-shadow: 0 0 0 0 rgba(118, 255, 3, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(118, 255, 3, 0); }
             100% { box-shadow: 0 0 0 0 rgba(118, 255, 3, 0); }
         }
-        
-        /* Admin Panel */
-        .order-card {
-            /* ОЧЕНЬ ПЛАВНЫЙ ПЕРЕХОД */
-            transition: all 0.5s var(--transition-ease);
-        }
-        .order-card:hover {
-            transform: translateY(-5px); 
-            /* СВЕЧЕНИЕ МЕНЬШЕ, ЧЕМ У ГЛАВНОЙ КНОПКИ */
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(156, 39, 176, 0.3); 
+        body.light-mode @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 64, 129, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(255, 64, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 64, 129, 0); }
         }
 
-        /* --- Остальные стили для корректной работы --- */
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .animated-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; opacity: 0.15; overflow: hidden; }
-        .floating-element { position: absolute; border-radius: 50%; background: linear-gradient(45deg, var(--sticker-color-1), var(--sticker-color-2)); animation: float 20s infinite ease-in-out; opacity: 0.8; filter: blur(5px); transition: background var(--transition-time) var(--transition-ease), box-shadow var(--transition-time) var(--transition-ease); }
-        .floating-element:nth-child(1) { width: 300px; height: 300px; top: -100px; left: -100px; animation-delay: 0s; }
-        .floating-element:nth-child(2) { width: 200px; height: 200px; top: 20%; right: 10%; animation-delay: 5s; background: linear-gradient(135deg, var(--sticker-color-2), var(--sticker-color-1)); }
-        .floating-element:nth-child(3) { width: 150px; height: 150px; bottom: 10%; left: 20%; animation-delay: 10s; }
-        @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg) scale(1); } 33% { transform: translateY(-30px) rotate(120deg) scale(1.1); } 66% { transform: translateY(20px) rotate(240deg) scale(0.9); } }
-        .stickers-container { position: fixed; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
-        .sticker { position: absolute; font-size: 4rem; opacity: 0.08; animation: stickerFloat 30s infinite linear; filter: blur(0.5px); font-family: var(--font-main); font-weight: 900; white-space: nowrap; transition: color var(--transition-time) var(--transition-ease); }
-        .sticker:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; font-size: 5rem; color: var(--sticker-color-1); }
-        .sticker:nth-child(2) { top: 20%; right: 8%; animation-delay: 6s; color: var(--sticker-color-2); }
-        .sticker:nth-child(3) { bottom: 15%; left: 10%; animation-delay: 12s; font-size: 6rem; opacity: 0.1; color: var(--sticker-color-1); }
-        .sticker:nth-child(4) { bottom: 25%; right: 5%; animation-delay: 18s; color: var(--sticker-color-2); }
-        .sticker:nth-child(5) { top: 40%; left: 15%; animation-delay: 24s; color: var(--sticker-color-1); }
-        .sticker:nth-child(6) { bottom: 5%; right: 40%; animation-delay: 30s; color: var(--sticker-color-2); font-size: 5rem; opacity: 0.15; }
-        @keyframes stickerFloat { 0% { transform: translateY(0) rotate(0deg) scale(1); } 25% { transform: translateY(-40px) rotate(15deg) scale(1.1); } 50% { transform: translateY(0) rotate(0deg) scale(1); } 75% { transform: translateY(40px) rotate(-15deg) scale(0.9); } 100% { transform: translateY(0) rotate(0deg) scale(1); } }
-        header { padding: 50px 0 30px; position: relative; text-align: center; }
-        .tabs { display: flex; justify-content: center; margin-bottom: 30px; gap: 15px; flex-wrap: wrap; }
-        #admin-tab-btn { display: none; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.8s var(--transition-ease); }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        .form-title { text-align: center; margin-bottom: 40px; font-size: 2.5rem; font-weight: 800; color: var(--main-text); text-shadow: 0 0 10px var(--sticker-color-1); transition: color var(--transition-time) var(--transition-ease), text-shadow var(--transition-time) var(--transition-ease); font-family: var(--font-main); }
-        label { display: block; margin-bottom: 12px; font-weight: 600; font-size: 1.1rem; color: var(--main-text); text-shadow: 0 0 3px rgba(255, 255, 255, 0.05); }
-        input, textarea { width: 100%; padding: 18px 20px; border-radius: 15px; font-size: 1.1rem; box-shadow: inset 0 0 10px var(--container-border); }
-        textarea { min-height: 140px; resize: vertical; }
-        .status-badge { display: inline-block; padding: 10px 25px; border-radius: 25px; font-weight: 800; margin-bottom: 20px; text-transform: uppercase; box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); }
-        .status-new { background: #FFAB40; color: white; }
-        .status-processing { background: #3498db; color: white; }
-        .status-completed { background: #2ecc71; color: white; }
-        .status-timeline { margin: 30px 0; padding-left: 20px; border-left: 3px dashed var(--input-border); transition: border-left-color var(--transition-time) var(--transition-ease); }
-        .status-step { position: relative; padding: 8px 0; font-weight: 500; color: var(--secondary-text); transition: color var(--transition-time) var(--transition-ease); }
-        .status-step::before { content: ''; position: absolute; left: -28px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; border-radius: 50%; background: #999; transition: background 0.5s ease, box-shadow 0.5s ease; }
-        .status-step.active::before { background: #2ecc71; box-shadow: 0 0 5px #2ecc71, 0 0 10px rgba(46, 204, 113, 0.2); }
-        .status-step.active { color: var(--main-text); }
-        .tracking-code-display { border: 3px solid #76FF03; border-radius: 20px; padding: 30px; margin: 30px 0; text-align: center; }
-        .tracking-code { font-size: 2.5rem; font-weight: 900; color: #9C27B0; margin: 20px 0; letter-spacing: 3px; background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 12px; border: 2px dashed #9C27B0; text-shadow: 0 0 10px #9C27B0; }
-        .copy-btn { background: #9C27B0; color: white; border: none; padding: 15px 30px; border-radius: 12px; font-size: 1.2rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; margin: 10px 5px; text-transform: uppercase; }
-        .copy-btn:hover { transform: scale(1.03); box-shadow: 0 5px 20px rgba(156, 39, 176, 0.6); background: #ab47bc; }
-        .close-btn { background: rgba(255, 255, 255, 0.08); color: var(--main-text); border: 1px solid rgba(255, 255, 255, 0.1); padding: 15px 30px; border-radius: 12px; font-size: 1.2rem; cursor: pointer; transition: all 0.3s ease; margin: 10px 5px; font-weight: 600; }
-        body.light-mode .close-btn:hover { background: rgba(0, 0, 0, 0.3); box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); }
-        body:not(.light-mode) .close-btn:hover { background: rgba(255, 255, 255, 0.3); box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
-        .order-card { background: rgba(0, 0, 0, 0.5); border-radius: 20px; padding: 30px; margin-bottom: 25px; border-left: 8px solid #9C27B0; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); }
-        body.light-mode .order-card { background: rgba(0, 0, 0, 0.08); border-left-color: #FFAB40; }
-        .admin-tab { padding: 12px 25px; background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 10px; color: var(--secondary-text); font-weight: 600; cursor: pointer; transition: all 0.5s var(--transition-ease); text-transform: uppercase; }
-        body.light-mode .admin-tab { background: rgba(0, 0, 0, 0.05); border: 2px solid rgba(0, 0, 0, 0.1); }
-        .admin-tab:hover { background: rgba(255, 255, 255, 0.1); box-shadow: 0 0 10px rgba(255, 255, 255, 0.05); }
-        body.light-mode .admin-tab:hover { background: rgba(0, 0, 0, 0.1); box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
-        .admin-tab.active { background: var(--btn-gradient); color: white; box-shadow: 0 5px 15px var(--sticker-color-1); border: none; transform: translateY(-2px); }
-        .notification { position: fixed; top: 40px; right: 40px; padding: 25px 30px; border-radius: 15px; color: white; font-weight: 700; z-index: 10000; transform: translateX(150%); transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5); }
-        .notification.show { transform: translateX(0); }
-        .notification.success { background: #2ecc71; box-shadow: 0 0 20px rgba(46, 204, 113, 0.5); }
-        .notification.error { background: #e74c3c; box-shadow: 0 0 20px rgba(231, 76, 60, 0.5); }
-        @media (max-width: 768px) { .logo { font-size: 3rem; } .form-container { padding: 30px; } .order-header { flex-direction: column; align-items: flex-start; } .admin-tabs { flex-direction: column; } .sticker { font-size: 3rem; } .tracking-code { font-size: 1.8rem; } .notification { right: 20px; top: 20px; } .tabs { gap: 10px; } .tab-btn { padding: 12px 20px; font-size: 1rem; } .theme-switch-wrapper { top: 15px; right: 15px; } .theme-switch-wrapper em { display: none; } }
+        /* Admin Panel */
+        .order-card {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-left: 8px solid var(--order-card-border-left);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        body.light-mode .order-card {
+            background: rgba(0, 0, 0, 0.08);
+        }
+
+        .order-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px var(--sticker-color-2);
+        }
+
+        .order-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        body.light-mode .order-header {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .order-actions button {
+            margin-top: 15px;
+            width: auto;
+            padding: 10px 20px;
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+        .order-actions button:last-child {
+            margin-right: 0;
+        }
+        .admin-notes textarea {
+            margin-top: 15px;
+            min-height: 80px;
+            padding: 10px;
+            font-size: 0.95rem;
+        }
+        .admin-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .admin-tab {
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--secondary-text);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        body.light-mode .admin-tab {
+            background: rgba(0, 0, 0, 0.05);
+            border: 2px solid rgba(0, 0, 0, 0.1);
+        }
+        .admin-tab:hover {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+        body.light-mode .admin-tab:hover {
+            background: rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .admin-tab.active {
+            background: var(--btn-gradient);
+            color: white;
+            box-shadow: 0 5px 20px var(--sticker-color-1);
+            border: none;
+            transform: translateY(-2px);
+        }
+
+        /* Notifications (unchanged) */
+        .notification {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            padding: 25px 30px;
+            border-radius: 15px;
+            color: white;
+            font-weight: 700;
+            z-index: 10000;
+            transform: translateX(150%);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: var(--notification-success);
+            box-shadow: 0 0 25px rgba(46, 204, 113, 0.7);
+        }
+
+        .notification.error {
+            background: var(--notification-error);
+            box-shadow: 0 0 25px rgba(231, 76, 60, 0.7);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo { font-size: 3rem; }
+            .form-container { padding: 30px; }
+            .order-header { flex-direction: column; align-items: flex-start; }
+            .admin-tabs { flex-direction: column; }
+            .sticker { font-size: 3rem; }
+            .tracking-code { font-size: 1.8rem; }
+            .notification { right: 20px; top: 20px; }
+            .tabs { gap: 10px; }
+            .tab-btn { padding: 12px 20px; font-size: 1rem; }
+            .theme-switch-wrapper { top: 15px; right: 15px; }
+            .theme-switch-wrapper em { display: none; } /* Hide text on small screens */
+        }
     </style>
 </head>
 <body>
@@ -298,7 +706,7 @@
     <div class="container">
         <header>
             <h1 class="logo" id="logo">MIZHWIX SHOP</h1>
-            <p style="font-size: 1.5rem; opacity: 0.9; font-weight: 600; text-shadow: 0 0 10px rgba(255, 255, 255, 0.05); transition: text-shadow var(--transition-time) var(--transition-ease), color var(--transition-time) var(--transition-ease);" class="header-slogan">
+            <p style="font-size: 1.5rem; opacity: 0.9; font-weight: 600; text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); transition: text-shadow 0.5s ease, color 0.5s ease;" class="header-slogan">
                 🔥 Премиум аккаунты Fortnite • Быстрое Отслеживание
             </p>
             <div class="theme-switch-wrapper">
@@ -354,7 +762,7 @@
                 </form>
 
                 <div id="trackingCodeDisplay" class="tracking-code-display" style="display: none;">
-                    <h3 style="color: var(--input-border); margin-bottom: 15px; font-weight: 800; text-transform: uppercase; transition: color var(--transition-time) var(--transition-ease);" class="tracking-title">
+                    <h3 style="color: var(--input-border); margin-bottom: 15px; font-weight: 800; text-transform: uppercase; transition: color 0.5s ease;" class="tracking-title">
                         🎉 Заказ УСПЕШНО создан!
                     </h3>
                     <p style="font-size: 1.1rem; opacity: 0.9;">
@@ -458,7 +866,7 @@
         
         const ADMIN_PASSWORD = '858585';
         let currentAdminTab = 'new';
-        let logoClickCount = 0; 
+        let logoClickCount = 0; // Для скрытого триггера админки
 
         // --- Theme Toggle Logic ---
         function applyTheme(isLightMode) {
@@ -479,12 +887,13 @@
             themeToggle.checked = true;
             applyTheme(true);
         } else {
-            // Default to dark mode
+            // Default to dark mode if no preference or explicitly set to dark
             themeToggle.checked = false;
             applyTheme(false); 
         }
 
         themeToggle.addEventListener('change', (event) => {
+            // event.target.checked is TRUE for light mode (switched)
             applyTheme(event.target.checked);
         });
 
@@ -495,9 +904,11 @@
                 adminTabBtn.style.display = 'block';
                 showNotification('🔐 Секретный вход активирован!');
                 setTimeout(() => {
+                    // Сброс счетчика, чтобы избежать случайного повторного открытия
                     logoClickCount = 0;
                 }, 5000);
             }
+            // Сбросить счетчик, если клики были слишком медленными
             if (logoClickCount > 0) {
                 clearTimeout(logo.timer);
                 logo.timer = setTimeout(() => {
@@ -510,9 +921,6 @@
         // Tab System
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                // ПЛАВНЫЙ СКРОЛЛ К КОНТЕНТУ
-                document.getElementById('logo').scrollIntoView({ behavior: 'smooth' });
-                
                 document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
                 document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
                 
@@ -569,7 +977,7 @@
             trackingCodeDisplay.style.display = 'none';
         }
 
-        // Submit Order (unchanged logic)
+        // Submit Order
         orderForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -611,7 +1019,7 @@
             }
         });
 
-        // Track Order (unchanged logic)
+        // Track Order
         trackOrderBtn.addEventListener('click', async function() {
             const trackingCode = document.getElementById('trackingCode').value.trim();
             
@@ -681,7 +1089,7 @@
             }
         });
 
-        // Admin Login (unchanged logic)
+        // Admin Login
         adminLogin.addEventListener('click', function() {
             if (adminPassword.value === ADMIN_PASSWORD) {
                 adminLoginContainer.style.display = 'none';
@@ -693,19 +1101,19 @@
             }
         });
 
-        // Logout (unchanged logic)
+        // Logout
         logoutBtn.addEventListener('click', function() {
             adminPanel.style.display = 'none';
             adminLoginContainer.style.display = 'block';
-            adminPassword.value = ''; 
-            adminTabBtn.style.display = 'none';
+            adminPassword.value = ''; // Очистка пароля
+            adminTabBtn.style.display = 'none'; // Скрыть кнопку админки при выходе
             showNotification('👋 Вы вышли из системы');
         });
 
-        // Load Admin Orders (unchanged logic)
+        // Load Admin Orders
         function loadAdminOrders() {
             const ordersList = document.getElementById('adminOrdersList');
-            ordersList.innerHTML = ''; 
+            ordersList.innerHTML = ''; // Clear previous orders
 
             db.collection('orders')
                 .where('status', '==', currentAdminTab)
@@ -713,7 +1121,7 @@
                 .get()
                 .then(snapshot => {
                     if (snapshot.empty) {
-                        ordersList.innerHTML = `<div class="order-card" style="text-align: center; border-left-color: #e74c3c;">Нет заказов со статусом: **${currentAdminTab.toUpperCase()}**</div>`;
+                        ordersList.innerHTML = `<div class="order-card" style="text-align: center; border-left-color: var(--notification-error);">Нет заказов со статусом: **${currentAdminTab.toUpperCase()}**</div>`;
                         return;
                     }
 
@@ -725,9 +1133,9 @@
                         let statusColor = '';
 
                         switch(order.status) {
-                            case 'new': statusText = 'НОВЫЙ'; statusColor = '#FFAB40'; break;
-                            case 'processing': statusText = 'В ОБРАБОТКЕ'; statusColor = '#3498db'; break;
-                            case 'completed': statusText = 'ВЫПОЛНЕН'; statusColor = '#2ecc71'; break;
+                            case 'new': statusText = 'НОВЫЙ'; statusColor = 'var(--status-new)'; break;
+                            case 'processing': statusText = 'В ОБРАБОТКЕ'; statusColor = 'var(--status-processing)'; break;
+                            case 'completed': statusText = 'ВЫПОЛНЕН'; statusColor = 'var(--status-completed)'; break;
                         }
 
                         const card = document.createElement('div');
@@ -750,10 +1158,10 @@
                                 <textarea id="notes-${orderId}" class="notes-input" placeholder="Добавить/Изменить заметки">${order.adminNotes || ''}</textarea>
                             </div>
                             <div class="order-actions">
-                                <button class="btn btn-small" style="background: #2ecc71; margin-top: 0;" onclick="updateOrderStatus('${orderId}', 'completed')">✅ Выполнить</button>
-                                <button class="btn btn-small" style="background: #3498db; margin-top: 0;" onclick="updateOrderStatus('${orderId}', 'processing')">🔄 В Обработке</button>
-                                <button class="btn btn-small" style="background: #e74c3c; margin-top: 0;" onclick="deleteOrder('${orderId}')">🗑️ Удалить</button>
-                                <button class="btn btn-small" style="background: #FFAB40; margin-top: 0;" onclick="saveAdminNotes('${orderId}')">💾 Сохранить Заметки</button>
+                                <button class="btn btn-small" style="background: var(--status-completed); margin-top: 0;" onclick="updateOrderStatus('${orderId}', 'completed')">✅ Выполнить</button>
+                                <button class="btn btn-small" style="background: var(--status-processing); margin-top: 0;" onclick="updateOrderStatus('${orderId}', 'processing')">🔄 В Обработке</button>
+                                <button class="btn btn-small" style="background: var(--notification-error); margin-top: 0;" onclick="deleteOrder('${orderId}')">🗑️ Удалить</button>
+                                <button class="btn btn-small" style="background: var(--status-new); margin-top: 0;" onclick="saveAdminNotes('${orderId}')">💾 Сохранить Заметки</button>
                             </div>
                         `;
                         ordersList.appendChild(card);
@@ -761,11 +1169,11 @@
                 })
                 .catch(error => {
                     console.error("Ошибка загрузки заказов: ", error);
-                    ordersList.innerHTML = `<div class="order-card" style="color: #e74c3c; border-left-color: #e74c3c;">❌ Ошибка загрузки заказов.</div>`;
+                    ordersList.innerHTML = `<div class="order-card" style="color: var(--notification-error); border-left-color: var(--notification-error);">❌ Ошибка загрузки заказов.</div>`;
                 });
         }
 
-        // Update Order Status (unchanged logic)
+        // Update Order Status
         window.updateOrderStatus = function(orderId, newStatus) {
             db.collection('orders').doc(orderId).update({
                 status: newStatus
@@ -780,7 +1188,7 @@
             });
         }
 
-        // Delete Order (unchanged logic)
+        // Delete Order
         window.deleteOrder = function(orderId) {
             if (!confirm(`Вы уверены, что хотите удалить заказ ${orderId.substring(0, 6)}...?`)) {
                 return;
@@ -797,7 +1205,7 @@
             });
         }
         
-        // Save Admin Notes (unchanged logic)
+        // Save Admin Notes
         window.saveAdminNotes = function(orderId) {
             const notesTextarea = document.getElementById(`notes-${orderId}`);
             const notes = notesTextarea ? notesTextarea.value : '';
