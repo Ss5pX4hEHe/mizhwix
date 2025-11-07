@@ -5,15 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MIZHWIX SHOP - Премиум аккаунты Fortnite</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Roboto:wght=300;400;500;700&display=swap" rel="stylesheet">
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
     <style>
-        /* --- Основные переменные и режимы --- */
+        /* --- Основные переменные (Теперь это ТЕМНЫЙ РЕЖИМ по умолчанию) --- */
         :root {
-            /* Light Mode Defaults */
+            /* Dark Mode Defaults */
+            --bg-start: #0a0a0a;
+            --bg-end: #1a0f2b; /* Глубокий фиолетово-черный */
+            --main-text: #e0e0e0;
+            --secondary-text: #b0b0b0;
+            --container-bg: rgba(0, 0, 0, 0.6);
+            --container-border: rgba(156, 39, 176, 0.3); /* Фиолетовый */
+            --container-shadow: 0 15px 45px rgba(0, 0, 0, 0.7), 0 0 40px rgba(156, 39, 176, 0.3);
+            --input-bg: rgba(0, 0, 0, 0.8);
+            --input-border: #9C27B0; /* Фиолетовый */
+            --input-focus-shadow: 0 0 20px rgba(156, 39, 176, 0.7);
+
+            --logo-gradient: linear-gradient(45deg, #76FF03, #9C27B0); /* Зеленый-Фиолетовый */
+            --btn-gradient: linear-gradient(45deg, #76FF03, #9C27B0);
+            --btn-hover-shadow: 0 20px 40px rgba(118, 255, 3, 0.7);
+            --tab-btn-bg: rgba(156, 39, 176, 0.1);
+            --tab-btn-border: rgba(118, 255, 3, 0.3);
+            --tab-btn-hover-bg: rgba(118, 255, 3, 0.15);
+            --tab-btn-active-shadow: 0 10px 30px rgba(118, 255, 3, 0.5);
+            --tracking-code-display-bg: rgba(118, 255, 3, 0.1);
+            --tracking-code-display-border: #76FF03;
+            --tracking-code-display-shadow: 0 0 35px rgba(118, 255, 3, 0.4);
+            --tracking-code-bg: rgba(0, 0, 0, 0.7);
+            --tracking-code-text: #9C27B0; /* Фиолетовый код */
+            --tracking-code-border: dashed #9C27B0;
+            --status-new: #FFAB40; /* Оранжевый */
+            --status-processing: #3498db; /* Синий */
+            --status-completed: #2ecc71; /* Зеленый */
+            --order-card-border-left: #9C27B0;
+            --notification-success: #2ecc71;
+            --notification-error: #e74c3c;
+            
+            /* Sticker colors */
+            --sticker-color-1: #76FF03;
+            --sticker-color-2: #9C27B0;
+            --close-btn-bg: rgba(255, 255, 255, 0.08);
+            --close-btn-border: rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- Light Mode Specific Styles (Переопределяет переменные root) --- */
+        body.light-mode {
+            /* Light Mode Overrides */
             --bg-start: #f8f8f8;
             --bg-end: #ffffff;
             --main-text: #2c3e50;
@@ -38,162 +79,13 @@
             --tracking-code-bg: rgba(0, 0, 0, 0.1);
             --tracking-code-text: #FFAB40; /* Оранжевый код */
             --tracking-code-border: dashed #FFAB40;
-            --status-new: #FFAB40; /* Оранжевый */
-            --status-processing: #3498db; /* Синий */
-            --status-completed: #2ecc71; /* Зеленый */
             --order-card-border-left: #FFAB40;
-            --notification-success: #2ecc71;
-            --notification-error: #e74c3c;
             
             /* Sticker colors */
             --sticker-color-1: #FF4081;
             --sticker-color-2: #FFAB40;
-
-            /* Dark Mode Variables (prefixed for clarity) */
-            --dm-bg-start: #0a0a0a;
-            --dm-bg-end: #1a0f2b; /* Глубокий фиолетово-черный */
-            --dm-main-text: #e0e0e0;
-            --dm-secondary-text: #b0b0b0;
-            --dm-container-bg: rgba(0, 0, 0, 0.6);
-            --dm-container-border: rgba(156, 39, 176, 0.3); /* Фиолетовый */
-            --dm-container-shadow: 0 15px 45px rgba(0, 0, 0, 0.7), 0 0 40px rgba(156, 39, 176, 0.3);
-            --dm-input-bg: rgba(0, 0, 0, 0.8);
-            --dm-input-border: #9C27B0; /* Фиолетовый */
-            --dm-input-focus-shadow: 0 0 20px rgba(156, 39, 176, 0.7);
-
-            --dm-logo-gradient: linear-gradient(45deg, #76FF03, #9C27B0); /* Зеленый-Фиолетовый */
-            --dm-btn-gradient: linear-gradient(45deg, #76FF03, #9C27B0);
-            --dm-btn-hover-shadow: 0 20px 40px rgba(118, 255, 3, 0.7);
-            --dm-tab-btn-bg: rgba(156, 39, 176, 0.1);
-            --dm-tab-btn-border: rgba(118, 255, 3, 0.3);
-            --dm-tab-btn-hover-bg: rgba(118, 255, 3, 0.15);
-            --dm-tab-btn-active-shadow: 0 10px 30px rgba(118, 255, 3, 0.5);
-            --dm-tracking-code-display-bg: rgba(118, 255, 3, 0.1);
-            --dm-tracking-code-display-border: #76FF03;
-            --dm-tracking-code-display-shadow: 0 0 35px rgba(118, 255, 3, 0.4);
-            --dm-tracking-code-bg: rgba(0, 0, 0, 0.7);
-            --dm-tracking-code-text: #9C27B0; /* Фиолетовый код */
-            --dm-tracking-code-border: dashed #9C27B0;
-            --dm-status-new: #FFAB40; /* Оранжевый (без изменений, т.к. статус) */
-            --dm-status-processing: #3498db; /* Синий (без изменений) */
-            --dm-status-completed: #2ecc71; /* Зеленый (без изменений) */
-
-            /* DM Sticker colors */
-            --dm-sticker-color-1: #76FF03;
-            --dm-sticker-color-2: #9C27B0;
-        }
-
-        /* --- Dark Mode Specific Styles --- */
-        body.dark-mode {
-            background: linear-gradient(135deg, var(--dm-bg-start) 0%, var(--dm-bg-end) 100%);
-            color: var(--dm-main-text);
-        }
-        body.dark-mode .animated-bg .floating-element {
-            background: linear-gradient(45deg, var(--dm-sticker-color-1), var(--dm-sticker-color-2));
-            box-shadow: 0 0 60px rgba(118, 255, 3, 0.6);
-        }
-        body.dark-mode .sticker {
-            color: var(--dm-sticker-color-1);
-        }
-        body.dark-mode .sticker.funpay {
-            color: var(--dm-sticker-color-2);
-        }
-        body.dark-mode .logo {
-            background: var(--dm-logo-gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 60px rgba(118, 255, 3, 0.6);
-        }
-        body.dark-mode .form-container {
-            background: var(--dm-container-bg);
-            backdrop-filter: blur(35px);
-            box-shadow: var(--dm-container-shadow);
-            border: 1px solid var(--dm-container-border);
-        }
-        body.dark-mode .form-title {
-            color: var(--dm-main-text);
-            text-shadow: 0 0 20px rgba(118, 255, 3, 0.4);
-        }
-        body.dark-mode label {
-            color: var(--dm-main-text);
-            text-shadow: 0 0 10px rgba(118, 255, 3, 0.2);
-        }
-        body.dark-mode input, body.dark-mode textarea {
-            border: 2px solid var(--dm-input-border);
-            background: var(--dm-input-bg);
-            color: var(--dm-main-text);
-            box-shadow: inset 0 0 15px rgba(156, 39, 176, 0.3);
-        }
-        body.dark-mode input:focus, body.dark-mode textarea:focus {
-            border-color: var(--dm-input-border);
-            box-shadow: var(--dm-input-focus-shadow);
-        }
-        body.dark-mode .btn {
-            background: var(--dm-btn-gradient);
-        }
-        body.dark-mode .btn:hover {
-            box-shadow: var(--dm-btn-hover-shadow);
-        }
-        body.dark-mode .tab-btn {
-            background: var(--dm-tab-btn-bg);
-            border: 2px solid var(--dm-tab-btn-border);
-            color: var(--dm-secondary-text);
-        }
-        body.dark-mode .tab-btn:hover {
-            background: var(--dm-tab-btn-hover-bg);
-            box-shadow: 0 0 25px rgba(118, 255, 3, 0.3);
-        }
-        body.dark-mode .tab-btn.active {
-            background: var(--dm-btn-gradient);
-            box-shadow: var(--dm-tab-btn-active-shadow);
-            color: white;
-        }
-        body.dark-mode .tracking-code-display {
-            background: var(--dm-tracking-code-display-bg);
-            border: 3px solid var(--dm-tracking-code-display-border);
-            box-shadow: var(--dm-tracking-code-display-shadow);
-        }
-        body.dark-mode .tracking-code {
-            color: var(--dm-tracking-code-text);
-            background: var(--dm-tracking-code-bg);
-            border: 2px var(--dm-tracking-code-border);
-            text-shadow: 0 0 15px rgba(156, 39, 176, 0.7);
-        }
-        body.dark-mode .copy-btn {
-            background: var(--dm-sticker-color-2); /* Фиолетовый FunPay */
-            box-shadow: 0 0 20px rgba(156, 39, 176, 0.5);
-        }
-        body.dark-mode .copy-btn:hover {
-            box-shadow: 0 10px 25px rgba(156, 39, 176, 0.8);
-            background: #ab47bc; /* Чуть светлее */
-        }
-        body.dark-mode .close-btn {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        body.dark-mode .tracking-result {
-            background: rgba(0, 0, 0, 0.5);
-            border-left: 5px solid var(--dm-tracking-code-text);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-        }
-        body.dark-mode .order-card {
-            background: rgba(0, 0, 0, 0.5);
-            border-left: 8px solid var(--dm-tracking-code-text);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-        }
-        body.dark-mode .order-card:hover {
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(156, 39, 176, 0.5);
-        }
-        body.dark-mode .status-step::before {
-            background: var(--dm-sticker-color-2); /* Фиолетовый */
-        }
-        body.dark-mode .status-step.active::before {
-            background: var(--status-success);
-            box-shadow: 0 0 10px var(--status-success), 0 0 20px var(--status-success);
-        }
-        body.dark-mode .status-timeline {
-            border-left: 3px dashed var(--dm-sticker-color-2);
+            --close-btn-bg: rgba(0, 0, 0, 0.15);
+            --close-btn-border: rgba(0, 0, 0, 0.2);
         }
 
         /* --- Общие стили --- */
@@ -205,6 +97,7 @@
 
         body {
             font-family: 'Roboto', sans-serif;
+            /* Используем переменные ROOT (т.е. темный режим) */
             background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
             color: var(--main-text);
             min-height: 100vh;
@@ -235,7 +128,7 @@
             position: absolute;
             border-radius: 50%;
             background: linear-gradient(45deg, var(--sticker-color-1), var(--sticker-color-2));
-            box-shadow: 0 0 50px rgba(255, 64, 129, 0.5);
+            box-shadow: 0 0 50px var(--sticker-color-1);
             animation: float 20s infinite ease-in-out;
             opacity: 0.8;
             filter: blur(5px);
@@ -256,7 +149,7 @@
             top: 20%;
             right: 10%;
             animation-delay: 5s;
-            background: linear-gradient(135deg, #FFAB40, #FFD700); /* Оранжевый-Золотой */
+            background: linear-gradient(135deg, var(--sticker-color-2), var(--sticker-color-1));
         }
 
         .floating-element:nth-child(3) {
@@ -265,7 +158,6 @@
             bottom: 10%;
             left: 20%;
             animation-delay: 10s;
-            background: linear-gradient(135deg, #FF6B35, #FF4500); /* FunPay оранжевый */
         }
 
         @keyframes float {
@@ -331,18 +223,19 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 0 50px rgba(255, 64, 129, 0.5);
+            text-shadow: 0 0 50px var(--sticker-color-1);
             animation: glow 3s infinite alternate;
             margin-bottom: 20px;
             transition: background 0.5s ease, text-shadow 0.5s ease;
+            cursor: pointer; /* Для скрытого триггера админки */
         }
 
         @keyframes glow {
-            0% { text-shadow: 0 0 20px rgba(255, 64, 129, 0.5); }
-            100% { text-shadow: 0 0 40px rgba(255, 64, 129, 0.8); }
+            0% { text-shadow: 0 0 20px var(--sticker-color-1); }
+            100% { text-shadow: 0 0 40px var(--sticker-color-1); }
         }
         
-        /* Dark Mode Toggle */
+        /* Theme Toggle */
         .theme-switch-wrapper {
             position: absolute;
             top: 20px;
@@ -384,10 +277,9 @@
             left: 4px;
             position: absolute;
             transition: .4s;
-            width: 26px;
         }
         input:checked + .slider {
-            background-color: #66bb6a; /* Green for Dark Mode On */
+            background-color: #FF4081; /* Pink for Light Mode On */
         }
         input:checked + .slider:before {
             transform: translateX(26px);
@@ -407,6 +299,11 @@
             gap: 15px;
             flex-wrap: wrap;
         }
+        
+        /* Скрытая кнопка для админа */
+        #admin-tab-btn {
+            display: none;
+        }
 
         .tab-btn {
             padding: 15px 35px;
@@ -423,7 +320,7 @@
 
         .tab-btn:hover {
             background: var(--tab-btn-hover-bg);
-            box-shadow: 0 0 20px rgba(255, 64, 129, 0.3);
+            box-shadow: 0 0 20px var(--sticker-color-1);
         }
 
         .tab-btn.active {
@@ -462,7 +359,7 @@
             font-size: 2.5rem;
             font-weight: 800;
             color: var(--main-text);
-            text-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-shadow: 0 0 15px var(--sticker-color-1);
             transition: color 0.5s ease, text-shadow 0.5s ease;
         }
 
@@ -485,7 +382,7 @@
             color: var(--main-text);
             font-size: 1.1rem;
             transition: all 0.4s ease;
-            box-shadow: inset 0 0 10px rgba(255, 64, 129, 0.2);
+            box-shadow: inset 0 0 10px var(--container-border);
         }
 
         input:focus, textarea:focus {
@@ -604,12 +501,12 @@
             padding: 20px;
             border-radius: 12px;
             border: 2px var(--tracking-code-border);
-            text-shadow: 0 0 10px rgba(255, 171, 64, 0.5);
+            text-shadow: 0 0 10px var(--sticker-color-2);
             transition: background 0.5s ease, color 0.5s ease, border-color 0.5s ease, text-shadow 0.5s ease;
         }
 
         .copy-btn {
-            background: #FFAB40; /* FunPay Orange */
+            background: var(--sticker-color-2);
             color: white;
             border: none;
             padding: 15px 30px;
@@ -624,14 +521,14 @@
 
         .copy-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(255, 171, 64, 0.6);
-            background: #ffbc71;
+            box-shadow: 0 10px 25px var(--sticker-color-2);
+            background: #ab47bc; /* Чуть светлее */
         }
 
         .close-btn {
-            background: rgba(0, 0, 0, 0.15);
+            background: var(--close-btn-bg);
             color: var(--main-text);
-            border: 1px solid rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--close-btn-border);
             padding: 15px 30px;
             border-radius: 12px;
             font-size: 1.2rem;
@@ -640,34 +537,30 @@
             margin: 10px 5px;
             font-weight: 600;
         }
-        body.dark-mode .close-btn {
-            background: rgba(255, 255, 255, 0.15);
-            color: var(--dm-main-text);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .close-btn:hover {
+        
+        body.light-mode .close-btn:hover {
             background: rgba(0, 0, 0, 0.3);
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
-        body.dark-mode .close-btn:hover {
+        body:not(.light-mode) .close-btn:hover {
             background: rgba(255, 255, 255, 0.3);
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 64, 129, 0.4); }
-            70% { box-shadow: 0 0 0 20px rgba(255, 64, 129, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 64, 129, 0); }
-        }
-        body.dark-mode @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(118, 255, 3, 0.4); }
             70% { box-shadow: 0 0 0 20px rgba(118, 255, 3, 0); }
             100% { box-shadow: 0 0 0 0 rgba(118, 255, 3, 0); }
         }
+        body.light-mode @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 64, 129, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(255, 64, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 64, 129, 0); }
+        }
 
         /* Admin Panel */
         .order-card {
-            background: rgba(0, 0, 0, 0.08);
+            background: rgba(0, 0, 0, 0.5);
             border-radius: 20px;
             padding: 30px;
             margin-bottom: 25px;
@@ -675,21 +568,24 @@
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
+        body.light-mode .order-card {
+            background: rgba(0, 0, 0, 0.08);
+        }
 
         .order-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 0 15px rgba(255, 171, 64, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px var(--sticker-color-2);
         }
 
         .order-header {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        body.dark-mode .order-header {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        body.light-mode .order-header {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
         
         .order-actions button {
@@ -717,8 +613,8 @@
         }
         .admin-tab {
             padding: 12px 25px;
-            background: rgba(0, 0, 0, 0.05);
-            border: 2px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             color: var(--secondary-text);
             font-weight: 600;
@@ -726,33 +622,27 @@
             transition: all 0.3s ease;
             text-transform: uppercase;
         }
-        body.dark-mode .admin-tab {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            color: var(--dm-secondary-text);
+        body.light-mode .admin-tab {
+            background: rgba(0, 0, 0, 0.05);
+            border: 2px solid rgba(0, 0, 0, 0.1);
         }
         .admin-tab:hover {
-            background: rgba(0, 0, 0, 0.1);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-        }
-        body.dark-mode .admin-tab:hover {
             background: rgba(255, 255, 255, 0.1);
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+        body.light-mode .admin-tab:hover {
+            background: rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
         .admin-tab.active {
             background: var(--btn-gradient);
             color: white;
-            box-shadow: 0 5px 20px rgba(255, 64, 129, 0.4);
+            box-shadow: 0 5px 20px var(--sticker-color-1);
             border: none;
             transform: translateY(-2px);
         }
-        body.dark-mode .admin-tab.active {
-            background: var(--dm-btn-gradient);
-            box-shadow: 0 5px 20px rgba(118, 255, 3, 0.4);
-        }
 
-
-        /* Notifications */
+        /* Notifications (unchanged) */
         .notification {
             position: fixed;
             top: 40px;
@@ -815,12 +705,12 @@
 
     <div class="container">
         <header>
-            <h1 class="logo">MIZHWIX SHOP</h1>
-            <p style="font-size: 1.5rem; opacity: 0.9; font-weight: 600; text-shadow: 0 0 10px rgba(0, 0, 0, 0.2); transition: text-shadow 0.5s ease, color 0.5s ease;" class="header-slogan">
+            <h1 class="logo" id="logo">MIZHWIX SHOP</h1>
+            <p style="font-size: 1.5rem; opacity: 0.9; font-weight: 600; text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); transition: text-shadow 0.5s ease, color 0.5s ease;" class="header-slogan">
                 🔥 Премиум аккаунты Fortnite • Быстрое Отслеживание
             </p>
             <div class="theme-switch-wrapper">
-                <em>Тёмный режим</em>
+                <em id="theme-text">Светлый режим</em>
                 <label class="theme-switch" for="checkbox">
                     <input type="checkbox" id="checkbox" />
                     <div class="slider round"></div>
@@ -831,12 +721,12 @@
         <div class="tabs">
             <button class="tab-btn active" data-tab="order">📦 СДЕЛАТЬ ЗАКАЗ</button>
             <button class="tab-btn" data-tab="tracking">🔍 ОТСЛЕДИТЬ ЗАКАЗ</button>
-            <button class="tab-btn" data-tab="admin">🔐 АДМИН-ПАНЕЛЬ</button>
+            <button class="tab-btn" data-tab="admin" id="admin-tab-btn">🔐 АДМИН-ПАНЕЛЬ</button>
         </div>
 
         <div class="tab-content active" id="order-tab">
             <div class="form-container">
-                <h2 class="form-title">🛒 ФОРМА ЗАКАЗА ПРЕМИУМ АККАУНТА</h2>
+                <h2 class="form-title">🛒 ФОРМА ЗАКАЗА АККАУНТА</h2>
                 <form id="orderForm">
                     <div class="form-group">
                         <label for="skins">👕 Скины (через запятую):</label>
@@ -868,7 +758,7 @@
                         <input type="text" id="funpayNick" placeholder="Ваш ник на FunPay" required>
                     </div>
                     
-                    <button type="submit" class="btn">🚀 ОТПРАВИТЬ ПРЕМИУМ ЗАКАЗ</button>
+                    <button type="submit" class="btn">🚀 ОТПРАВИТЬ ЗАКАЗ</button>
                 </form>
 
                 <div id="trackingCodeDisplay" class="tracking-code-display" style="display: none;">
@@ -958,6 +848,7 @@
         const db = firebase.firestore();
 
         // DOM Elements
+        const logo = document.getElementById('logo');
         const orderForm = document.getElementById('orderForm');
         const adminLoginContainer = document.getElementById('adminLoginContainer');
         const adminPanel = document.getElementById('adminPanel');
@@ -970,34 +861,62 @@
         const displayTrackingCode = document.getElementById('displayTrackingCode');
         const themeToggle = document.getElementById('checkbox');
         const body = document.body;
+        const themeText = document.getElementById('theme-text');
+        const adminTabBtn = document.getElementById('admin-tab-btn');
         
         const ADMIN_PASSWORD = '858585';
         let currentAdminTab = 'new';
+        let logoClickCount = 0; // Для скрытого триггера админки
 
         // --- Theme Toggle Logic ---
-        function applyTheme(isDarkMode) {
-            if (isDarkMode) {
-                body.classList.add('dark-mode');
-                localStorage.setItem('darkMode', 'enabled');
+        function applyTheme(isLightMode) {
+            if (isLightMode) {
+                body.classList.add('light-mode');
+                localStorage.setItem('theme', 'light');
+                themeText.textContent = 'Тёмный режим';
             } else {
-                body.classList.remove('dark-mode');
-                localStorage.setItem('darkMode', 'disabled');
+                body.classList.remove('light-mode');
+                localStorage.setItem('theme', 'dark');
+                themeText.textContent = 'Светлый режим';
             }
         }
 
         // Check for saved theme preference on load
-        const savedTheme = localStorage.getItem('darkMode');
-        if (savedTheme === 'enabled') {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
             themeToggle.checked = true;
             applyTheme(true);
         } else {
+            // Default to dark mode if no preference or explicitly set to dark
             themeToggle.checked = false;
-            applyTheme(false); // Ensure light mode is applied if not explicitly dark
+            applyTheme(false); 
         }
 
         themeToggle.addEventListener('change', (event) => {
+            // event.target.checked is TRUE for light mode (switched)
             applyTheme(event.target.checked);
         });
+
+        // --- Admin Hidden Trigger ---
+        logo.addEventListener('click', () => {
+            logoClickCount++;
+            if (logoClickCount === 5) {
+                adminTabBtn.style.display = 'block';
+                showNotification('🔐 Секретный вход активирован!');
+                setTimeout(() => {
+                    // Сброс счетчика, чтобы избежать случайного повторного открытия
+                    logoClickCount = 0;
+                }, 5000);
+            }
+            // Сбросить счетчик, если клики были слишком медленными
+            if (logoClickCount > 0) {
+                clearTimeout(logo.timer);
+                logo.timer = setTimeout(() => {
+                    logoClickCount = 0;
+                }, 600);
+            }
+        });
+
 
         // Tab System
         document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1187,6 +1106,7 @@
             adminPanel.style.display = 'none';
             adminLoginContainer.style.display = 'block';
             adminPassword.value = ''; // Очистка пароля
+            adminTabBtn.style.display = 'none'; // Скрыть кнопку админки при выходе
             showNotification('👋 Вы вышли из системы');
         });
 
