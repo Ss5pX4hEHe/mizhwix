@@ -11,24 +11,192 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
     <style>
+        /* --- Основные переменные и режимы --- */
         :root {
-            --primary: #ff3e7f;
-            --primary-dark: #e0356e;
-            --secondary: #3498db;
-            --accent: #9b59b6;
-            --fortnite-blue: #00b2ff;
-            --fortnite-purple: #8a2be2;
-            --fanpay-orange: #ff6b35;
-            --dark: #1a1a2e;
-            --darker: #16213e;
-            --light: #ecf0f1;
-            --success: #2ecc71;
-            --warning: #f39c12;
-            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            --gradient-fortnite: linear-gradient(45deg, var(--fortnite-blue) 0%, var(--fortnite-purple) 100%);
-            --gradient-dark: linear-gradient(135deg, var(--darker) 0%, #0f3460 100%);
+            /* Light Mode Defaults */
+            --bg-start: #f8f8f8;
+            --bg-end: #ffffff;
+            --main-text: #2c3e50;
+            --secondary-text: #5a5a5a;
+            --container-bg: rgba(255, 255, 255, 0.9);
+            --container-border: rgba(0, 0, 0, 0.1);
+            --container-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --input-bg: rgba(0, 0, 0, 0.05);
+            --input-border: #FF4081; /* Красный акцент */
+            --input-focus-shadow: 0 0 15px rgba(255, 64, 129, 0.4);
+
+            --logo-gradient: linear-gradient(45deg, #FF4081, #FFAB40); /* Красный-Оранжевый */
+            --btn-gradient: linear-gradient(45deg, #FF4081, #FFAB40);
+            --btn-hover-shadow: 0 15px 35px rgba(255, 64, 129, 0.6);
+            --tab-btn-bg: rgba(0, 0, 0, 0.05);
+            --tab-btn-border: rgba(255, 64, 129, 0.2);
+            --tab-btn-hover-bg: rgba(255, 64, 129, 0.1);
+            --tab-btn-active-shadow: 0 8px 25px rgba(255, 64, 129, 0.4);
+            --tracking-code-display-bg: rgba(255, 64, 129, 0.15);
+            --tracking-code-display-border: #FF4081;
+            --tracking-code-display-shadow: 0 0 30px rgba(255, 64, 129, 0.3);
+            --tracking-code-bg: rgba(0, 0, 0, 0.1);
+            --tracking-code-text: #FFAB40; /* Оранжевый код */
+            --tracking-code-border: dashed #FFAB40;
+            --status-new: #FFAB40; /* Оранжевый */
+            --status-processing: #3498db; /* Синий */
+            --status-completed: #2ecc71; /* Зеленый */
+            --order-card-border-left: #FFAB40;
+            --notification-success: #2ecc71;
+            --notification-error: #e74c3c;
+            
+            /* Sticker colors */
+            --sticker-color-1: #FF4081;
+            --sticker-color-2: #FFAB40;
+
+            /* Dark Mode Variables (prefixed for clarity) */
+            --dm-bg-start: #0a0a0a;
+            --dm-bg-end: #1a0f2b; /* Глубокий фиолетово-черный */
+            --dm-main-text: #e0e0e0;
+            --dm-secondary-text: #b0b0b0;
+            --dm-container-bg: rgba(0, 0, 0, 0.6);
+            --dm-container-border: rgba(156, 39, 176, 0.3); /* Фиолетовый */
+            --dm-container-shadow: 0 15px 45px rgba(0, 0, 0, 0.7), 0 0 40px rgba(156, 39, 176, 0.3);
+            --dm-input-bg: rgba(0, 0, 0, 0.8);
+            --dm-input-border: #9C27B0; /* Фиолетовый */
+            --dm-input-focus-shadow: 0 0 20px rgba(156, 39, 176, 0.7);
+
+            --dm-logo-gradient: linear-gradient(45deg, #76FF03, #9C27B0); /* Зеленый-Фиолетовый */
+            --dm-btn-gradient: linear-gradient(45deg, #76FF03, #9C27B0);
+            --dm-btn-hover-shadow: 0 20px 40px rgba(118, 255, 3, 0.7);
+            --dm-tab-btn-bg: rgba(156, 39, 176, 0.1);
+            --dm-tab-btn-border: rgba(118, 255, 3, 0.3);
+            --dm-tab-btn-hover-bg: rgba(118, 255, 3, 0.15);
+            --dm-tab-btn-active-shadow: 0 10px 30px rgba(118, 255, 3, 0.5);
+            --dm-tracking-code-display-bg: rgba(118, 255, 3, 0.1);
+            --dm-tracking-code-display-border: #76FF03;
+            --dm-tracking-code-display-shadow: 0 0 35px rgba(118, 255, 3, 0.4);
+            --dm-tracking-code-bg: rgba(0, 0, 0, 0.7);
+            --dm-tracking-code-text: #9C27B0; /* Фиолетовый код */
+            --dm-tracking-code-border: dashed #9C27B0;
+            --dm-status-new: #FFAB40; /* Оранжевый (без изменений, т.к. статус) */
+            --dm-status-processing: #3498db; /* Синий (без изменений) */
+            --dm-status-completed: #2ecc71; /* Зеленый (без изменений) */
+
+            /* DM Sticker colors */
+            --dm-sticker-color-1: #76FF03;
+            --dm-sticker-color-2: #9C27B0;
         }
 
+        /* --- Dark Mode Specific Styles --- */
+        body.dark-mode {
+            background: linear-gradient(135deg, var(--dm-bg-start) 0%, var(--dm-bg-end) 100%);
+            color: var(--dm-main-text);
+        }
+        body.dark-mode .animated-bg .floating-element {
+            background: linear-gradient(45deg, var(--dm-sticker-color-1), var(--dm-sticker-color-2));
+            box-shadow: 0 0 60px rgba(118, 255, 3, 0.6);
+        }
+        body.dark-mode .sticker {
+            color: var(--dm-sticker-color-1);
+        }
+        body.dark-mode .sticker.funpay {
+            color: var(--dm-sticker-color-2);
+        }
+        body.dark-mode .logo {
+            background: var(--dm-logo-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 60px rgba(118, 255, 3, 0.6);
+        }
+        body.dark-mode .form-container {
+            background: var(--dm-container-bg);
+            backdrop-filter: blur(35px);
+            box-shadow: var(--dm-container-shadow);
+            border: 1px solid var(--dm-container-border);
+        }
+        body.dark-mode .form-title {
+            color: var(--dm-main-text);
+            text-shadow: 0 0 20px rgba(118, 255, 3, 0.4);
+        }
+        body.dark-mode label {
+            color: var(--dm-main-text);
+            text-shadow: 0 0 10px rgba(118, 255, 3, 0.2);
+        }
+        body.dark-mode input, body.dark-mode textarea {
+            border: 2px solid var(--dm-input-border);
+            background: var(--dm-input-bg);
+            color: var(--dm-main-text);
+            box-shadow: inset 0 0 15px rgba(156, 39, 176, 0.3);
+        }
+        body.dark-mode input:focus, body.dark-mode textarea:focus {
+            border-color: var(--dm-input-border);
+            box-shadow: var(--dm-input-focus-shadow);
+        }
+        body.dark-mode .btn {
+            background: var(--dm-btn-gradient);
+        }
+        body.dark-mode .btn:hover {
+            box-shadow: var(--dm-btn-hover-shadow);
+        }
+        body.dark-mode .tab-btn {
+            background: var(--dm-tab-btn-bg);
+            border: 2px solid var(--dm-tab-btn-border);
+            color: var(--dm-secondary-text);
+        }
+        body.dark-mode .tab-btn:hover {
+            background: var(--dm-tab-btn-hover-bg);
+            box-shadow: 0 0 25px rgba(118, 255, 3, 0.3);
+        }
+        body.dark-mode .tab-btn.active {
+            background: var(--dm-btn-gradient);
+            box-shadow: var(--dm-tab-btn-active-shadow);
+            color: white;
+        }
+        body.dark-mode .tracking-code-display {
+            background: var(--dm-tracking-code-display-bg);
+            border: 3px solid var(--dm-tracking-code-display-border);
+            box-shadow: var(--dm-tracking-code-display-shadow);
+        }
+        body.dark-mode .tracking-code {
+            color: var(--dm-tracking-code-text);
+            background: var(--dm-tracking-code-bg);
+            border: 2px var(--dm-tracking-code-border);
+            text-shadow: 0 0 15px rgba(156, 39, 176, 0.7);
+        }
+        body.dark-mode .copy-btn {
+            background: var(--dm-sticker-color-2); /* Фиолетовый FunPay */
+            box-shadow: 0 0 20px rgba(156, 39, 176, 0.5);
+        }
+        body.dark-mode .copy-btn:hover {
+            box-shadow: 0 10px 25px rgba(156, 39, 176, 0.8);
+            background: #ab47bc; /* Чуть светлее */
+        }
+        body.dark-mode .close-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        body.dark-mode .tracking-result {
+            background: rgba(0, 0, 0, 0.5);
+            border-left: 5px solid var(--dm-tracking-code-text);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+        body.dark-mode .order-card {
+            background: rgba(0, 0, 0, 0.5);
+            border-left: 8px solid var(--dm-tracking-code-text);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+        body.dark-mode .order-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(156, 39, 176, 0.5);
+        }
+        body.dark-mode .status-step::before {
+            background: var(--dm-sticker-color-2); /* Фиолетовый */
+        }
+        body.dark-mode .status-step.active::before {
+            background: var(--status-success);
+            box-shadow: 0 0 10px var(--status-success), 0 0 20px var(--status-success);
+        }
+        body.dark-mode .status-timeline {
+            border-left: 3px dashed var(--dm-sticker-color-2);
+        }
+
+        /* --- Общие стили --- */
         * {
             margin: 0;
             padding: 0;
@@ -37,11 +205,12 @@
 
         body {
             font-family: 'Roboto', sans-serif;
-            background: var(--gradient-dark);
-            color: var(--light);
+            background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+            color: var(--main-text);
             min-height: 100vh;
             overflow-x: hidden;
             line-height: 1.6;
+            transition: background 0.5s ease, color 0.5s ease;
         }
 
         .container {
@@ -65,11 +234,12 @@
         .floating-element {
             position: absolute;
             border-radius: 50%;
-            background: var(--gradient-fortnite);
-            box-shadow: 0 0 50px rgba(0, 178, 255, 0.5);
+            background: linear-gradient(45deg, var(--sticker-color-1), var(--sticker-color-2));
+            box-shadow: 0 0 50px rgba(255, 64, 129, 0.5);
             animation: float 20s infinite ease-in-out;
             opacity: 0.8;
             filter: blur(5px);
+            transition: background 0.5s ease, box-shadow 0.5s ease;
         }
 
         .floating-element:nth-child(1) {
@@ -86,7 +256,7 @@
             top: 20%;
             right: 10%;
             animation-delay: 5s;
-            background: var(--gradient);
+            background: linear-gradient(135deg, #FFAB40, #FFD700); /* Оранжевый-Золотой */
         }
 
         .floating-element:nth-child(3) {
@@ -95,7 +265,7 @@
             bottom: 10%;
             left: 20%;
             animation-delay: 10s;
-            background: var(--fanpay-orange);
+            background: linear-gradient(135deg, #FF6B35, #FF4500); /* FunPay оранжевый */
         }
 
         @keyframes float {
@@ -122,45 +292,28 @@
         .sticker {
             position: absolute;
             font-size: 4rem;
-            opacity: 0.08; /* Более заметные стикеры */
+            opacity: 0.08;
             animation: stickerFloat 30s infinite linear;
             filter: blur(0.5px);
-            font-family: 'Montserrat', sans-serif; /* Для слова FUNPAY */
+            font-family: 'Montserrat', sans-serif;
             font-weight: 900;
             white-space: nowrap;
+            transition: color 0.5s ease;
         }
 
-        .sticker.funpay {
-            color: var(--fanpay-orange);
-        }
-
-        .sticker.fortnite {
-            color: var(--fortnite-blue);
-        }
-
-        .sticker:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; font-size: 5rem; }
-        .sticker:nth-child(2) { top: 20%; right: 8%; animation-delay: 6s; }
-        .sticker:nth-child(3) { bottom: 15%; left: 10%; animation-delay: 12s; font-size: 6rem; opacity: 0.1; }
-        .sticker:nth-child(4) { bottom: 25%; right: 5%; animation-delay: 18s; }
-        .sticker:nth-child(5) { top: 40%; left: 15%; animation-delay: 24s; }
-        .sticker:nth-child(6) { bottom: 5%; right: 40%; animation-delay: 30s; color: var(--fanpay-orange); font-size: 5rem; opacity: 0.15; } /* Добавлен FUNPAY */
+        .sticker:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; font-size: 5rem; color: var(--sticker-color-1); }
+        .sticker:nth-child(2) { top: 20%; right: 8%; animation-delay: 6s; color: var(--sticker-color-2); }
+        .sticker:nth-child(3) { bottom: 15%; left: 10%; animation-delay: 12s; font-size: 6rem; opacity: 0.1; color: var(--sticker-color-1); }
+        .sticker:nth-child(4) { bottom: 25%; right: 5%; animation-delay: 18s; color: var(--sticker-color-2); }
+        .sticker:nth-child(5) { top: 40%; left: 15%; animation-delay: 24s; color: var(--sticker-color-1); }
+        .sticker:nth-child(6) { bottom: 5%; right: 40%; animation-delay: 30s; color: var(--sticker-color-2); font-size: 5rem; opacity: 0.15; }
 
         @keyframes stickerFloat {
-            0% {
-                transform: translateY(0) rotate(0deg) scale(1);
-            }
-            25% {
-                transform: translateY(-40px) rotate(15deg) scale(1.1); /* Менее резкий поворот */
-            }
-            50% {
-                transform: translateY(0) rotate(0deg) scale(1);
-            }
-            75% {
-                transform: translateY(40px) rotate(-15deg) scale(0.9);
-            }
-            100% {
-                transform: translateY(0) rotate(0deg) scale(1);
-            }
+            0% { transform: translateY(0) rotate(0deg) scale(1); }
+            25% { transform: translateY(-40px) rotate(15deg) scale(1.1); }
+            50% { transform: translateY(0) rotate(0deg) scale(1); }
+            75% { transform: translateY(40px) rotate(-15deg) scale(0.9); }
+            100% { transform: translateY(0) rotate(0deg) scale(1); }
         }
 
         /* Header */
@@ -174,35 +327,93 @@
             font-family: 'Montserrat', sans-serif;
             font-size: 4.5rem;
             font-weight: 900;
-            background: var(--gradient-fortnite);
+            background: var(--logo-gradient);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 0 50px rgba(0, 178, 255, 0.5);
+            text-shadow: 0 0 50px rgba(255, 64, 129, 0.5);
             animation: glow 3s infinite alternate;
             margin-bottom: 20px;
+            transition: background 0.5s ease, text-shadow 0.5s ease;
         }
 
         @keyframes glow {
-            0% { text-shadow: 0 0 20px rgba(0, 178, 255, 0.5); }
-            100% { text-shadow: 0 0 40px rgba(0, 178, 255, 0.8); }
+            0% { text-shadow: 0 0 20px rgba(255, 64, 129, 0.5); }
+            100% { text-shadow: 0 0 40px rgba(255, 64, 129, 0.8); }
         }
         
+        /* Dark Mode Toggle */
+        .theme-switch-wrapper {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .theme-switch-wrapper em {
+            margin-right: 10px;
+            font-style: normal;
+            font-weight: 600;
+            color: var(--main-text);
+            transition: color 0.5s ease;
+        }
+        .theme-switch {
+            display: inline-block;
+            height: 34px;
+            position: relative;
+            width: 60px;
+        }
+        .theme-switch input {
+            display:none;
+        }
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+        }
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 26px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 26px;
+        }
+        input:checked + .slider {
+            background-color: #66bb6a; /* Green for Dark Mode On */
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .slider.round {
+            border-radius: 34px;
+        }
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
         /* Tabs */
         .tabs {
             display: flex;
             justify-content: center;
             margin-bottom: 30px;
-            gap: 15px; /* Увеличенный зазор */
+            gap: 15px;
             flex-wrap: wrap;
         }
 
         .tab-btn {
-            padding: 15px 35px; /* Больше padding */
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(0, 178, 255, 0.2); /* Тонкая рамка */
+            padding: 15px 35px;
+            background: var(--tab-btn-bg);
+            border: 2px solid var(--tab-btn-border);
             border-radius: 12px;
-            color: var(--light);
+            color: var(--secondary-text);
             font-size: 1.15rem;
             font-weight: 700;
             cursor: pointer;
@@ -211,15 +422,16 @@
         }
 
         .tab-btn:hover {
-            background: rgba(0, 178, 255, 0.2);
-            box-shadow: 0 0 20px rgba(0, 178, 255, 0.3);
+            background: var(--tab-btn-hover-bg);
+            box-shadow: 0 0 20px rgba(255, 64, 129, 0.3);
         }
 
         .tab-btn.active {
-            background: var(--gradient-fortnite);
-            transform: translateY(-3px); /* Более заметный подъем */
-            box-shadow: 0 8px 25px rgba(0, 178, 255, 0.4);
+            background: var(--btn-gradient);
+            transform: translateY(-3px);
+            box-shadow: var(--tab-btn-active-shadow);
             border: none;
+            color: white;
         }
 
         .tab-content {
@@ -233,24 +445,25 @@
 
         /* Forms (Glassmorphism + Neon) */
         .form-container {
-            background: rgba(255, 255, 255, 0.05); /* Более прозрачный фон */
-            backdrop-filter: blur(25px); /* Более сильное размытие */
+            background: var(--container-bg);
+            backdrop-filter: blur(25px);
             border-radius: 25px;
             padding: 50px;
             margin: 30px auto;
             max-width: 850px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 50px rgba(0, 178, 255, 0.2); /* Усиленная тень */
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--container-shadow);
+            border: 1px solid var(--container-border);
             transition: all 0.5s ease;
         }
 
         .form-title {
             text-align: center;
             margin-bottom: 40px;
-            font-size: 2.5rem; /* Увеличенный размер */
+            font-size: 2.5rem;
             font-weight: 800;
-            color: var(--light);
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3); /* Легкое свечение */
+            color: var(--main-text);
+            text-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            transition: color 0.5s ease, text-shadow 0.5s ease;
         }
 
         label {
@@ -258,25 +471,26 @@
             margin-bottom: 12px;
             font-weight: 600;
             font-size: 1.1rem;
-            color: var(--light);
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+            color: var(--main-text);
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            transition: color 0.5s ease, text-shadow 0.5s ease;
         }
 
         input, textarea {
             width: 100%;
             padding: 18px 20px;
             border-radius: 15px;
-            border: 2px solid var(--fortnite-blue); /* Fortnite рамка */
-            background: rgba(0, 0, 0, 0.5); /* Более темный фон полей */
-            color: var(--light);
+            border: 2px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--main-text);
             font-size: 1.1rem;
             transition: all 0.4s ease;
-            box-shadow: inset 0 0 10px rgba(0, 178, 255, 0.2);
+            box-shadow: inset 0 0 10px rgba(255, 64, 129, 0.2);
         }
 
         input:focus, textarea:focus {
-            border-color: var(--fortnite-purple);
-            box-shadow: 0 0 15px rgba(0, 178, 255, 0.5); /* Неоновое свечение при фокусе */
+            border-color: var(--input-border);
+            box-shadow: var(--input-focus-shadow);
             outline: none;
         }
 
@@ -288,33 +502,34 @@
         .btn {
             display: block;
             width: 100%;
-            padding: 20px; /* Больше padding */
-            background: var(--gradient-fortnite);
+            padding: 20px;
+            background: var(--btn-gradient);
             color: white;
             border: none;
             border-radius: 15px;
-            font-size: 1.3rem; /* Крупнее шрифт */
+            font-size: 1.3rem;
             font-weight: 800;
             cursor: pointer;
             transition: all 0.4s ease;
-            margin-top: 30px; /* Увеличенный отступ */
+            margin-top: 30px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .btn:hover {
-            transform: translateY(-7px); /* Более выраженный эффект */
-            box-shadow: 0 15px 35px rgba(0, 178, 255, 0.6);
+            transform: translateY(-7px);
+            box-shadow: var(--btn-hover-shadow);
         }
 
         /* Order Tracking */
         .tracking-result {
             margin-top: 30px;
             padding: 30px;
-            background: rgba(255, 255, 255, 0.08); /* Светлее фон */
-            border-radius: 20px; /* Более мягкие углы */
-            border-left: 5px solid var(--fanpay-orange); /* Акцент FunPay */
+            background: rgba(0, 0, 0, 0.08);
+            border-radius: 20px;
+            border-left: 5px solid var(--tracking-code-text);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transition: background 0.5s ease, border-left-color 0.5s ease, box-shadow 0.5s ease;
         }
 
         .status-badge {
@@ -327,55 +542,77 @@
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
         }
 
-        .status-new { background: #f39c12; color: white; }
-        .status-processing { background: #3498db; color: white; }
-        .status-completed { background: #2ecc71; color: white; }
+        .status-new { background: var(--status-new); color: white; }
+        .status-processing { background: var(--status-processing); color: white; }
+        .status-completed { background: var(--status-completed); color: white; }
 
         .status-timeline {
-            margin: 30px 0; /* Увеличенный отступ */
+            margin: 30px 0;
             padding-left: 20px;
-            border-left: 3px dashed var(--fortnite-purple); /* Пунктирная линия */
+            border-left: 3px dashed var(--input-border);
+            transition: border-left-color 0.5s ease;
         }
 
+        .status-step {
+            position: relative;
+            padding: 8px 0;
+            font-weight: 500;
+            color: var(--secondary-text);
+            transition: color 0.5s ease;
+        }
         .status-step::before {
-            background: var(--fortnite-purple); /* Цвет по умолчанию */
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #999; /* Default */
+            transition: background 0.3s ease, box-shadow 0.3s ease;
         }
 
         .status-step.active::before {
-            background: var(--success);
-            box-shadow: 0 0 10px var(--success), 0 0 20px var(--success); /* Усиленное свечение */
+            background: var(--status-completed);
+            box-shadow: 0 0 10px var(--status-completed), 0 0 20px rgba(46, 204, 113, 0.5);
+        }
+        .status-step.active {
+            color: var(--main-text);
         }
         
         /* Tracking Code Display */
         .tracking-code-display {
-            background: rgba(0, 178, 255, 0.15); /* Более выраженный фон */
-            border: 3px solid var(--fortnite-blue); /* Более толстая рамка */
+            background: var(--tracking-code-display-bg);
+            border: 3px solid var(--tracking-code-display-border);
             border-radius: 20px;
             padding: 30px;
             margin: 30px 0;
             text-align: center;
             animation: pulse 2s infinite;
-            box-shadow: 0 0 30px rgba(0, 178, 255, 0.3);
+            box-shadow: var(--tracking-code-display-shadow);
+            transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
         }
 
         .tracking-code {
             font-size: 2.5rem;
             font-weight: 900;
-            color: var(--fanpay-orange); /* Акцент FunPay */
+            color: var(--tracking-code-text);
             margin: 20px 0;
             letter-spacing: 3px;
-            background: rgba(0, 0, 0, 0.4);
+            background: var(--tracking-code-bg);
             padding: 20px;
             border-radius: 12px;
-            border: 2px dashed var(--fanpay-orange);
-            text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+            border: 2px var(--tracking-code-border);
+            text-shadow: 0 0 10px rgba(255, 171, 64, 0.5);
+            transition: background 0.5s ease, color 0.5s ease, border-color 0.5s ease, text-shadow 0.5s ease;
         }
 
         .copy-btn {
-            background: var(--fanpay-orange);
+            background: #FFAB40; /* FunPay Orange */
             color: white;
             border: none;
-            padding: 15px 30px; /* Больше padding */
+            padding: 15px 30px;
             border-radius: 12px;
             font-size: 1.2rem;
             font-weight: 700;
@@ -386,15 +623,15 @@
         }
 
         .copy-btn:hover {
-            transform: scale(1.05); /* Легкое увеличение */
-            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.6);
-            background: #ff8c61; /* Светлее при наведении */
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 171, 64, 0.6);
+            background: #ffbc71;
         }
 
         .close-btn {
-            background: rgba(255, 255, 255, 0.15);
-            color: var(--light);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.15);
+            color: var(--main-text);
+            border: 1px solid rgba(0, 0, 0, 0.2);
             padding: 15px 30px;
             border-radius: 12px;
             font-size: 1.2rem;
@@ -403,42 +640,117 @@
             margin: 10px 5px;
             font-weight: 600;
         }
-
+        body.dark-mode .close-btn {
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--dm-main-text);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
         .close-btn:hover {
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        body.dark-mode .close-btn:hover {
             background: rgba(255, 255, 255, 0.3);
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(0, 178, 255, 0.4); }
-            70% { box-shadow: 0 0 0 20px rgba(0, 178, 255, 0); } /* Более крупный пульс */
-            100% { box-shadow: 0 0 0 0 rgba(0, 178, 255, 0); }
+            0% { box-shadow: 0 0 0 0 rgba(255, 64, 129, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(255, 64, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 64, 129, 0); }
+        }
+        body.dark-mode @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(118, 255, 3, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(118, 255, 3, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(118, 255, 3, 0); }
         }
 
         /* Admin Panel */
-        /* Использует общие стили .form-container для красивого фона */
-
         .order-card {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.08);
             border-radius: 20px;
             padding: 30px;
             margin-bottom: 25px;
-            border-left: 8px solid var(--fanpay-orange); /* Акцент FunPay */
+            border-left: 8px solid var(--order-card-border-left);
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .order-card:hover {
-            transform: translateY(-8px); /* Более выраженный подъем */
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 107, 53, 0.3); /* Неоновый эффект при наведении */
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 0 15px rgba(255, 171, 64, 0.3);
         }
 
         .order-header {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        body.dark-mode .order-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        /* ... остальные стили админки ... */
+        .order-actions button {
+            margin-top: 15px;
+            width: auto;
+            padding: 10px 20px;
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+        .order-actions button:last-child {
+            margin-right: 0;
+        }
+        .admin-notes textarea {
+            margin-top: 15px;
+            min-height: 80px;
+            padding: 10px;
+            font-size: 0.95rem;
+        }
+        .admin-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .admin-tab {
+            padding: 12px 25px;
+            background: rgba(0, 0, 0, 0.05);
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            color: var(--secondary-text);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        body.dark-mode .admin-tab {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            color: var(--dm-secondary-text);
+        }
+        .admin-tab:hover {
+            background: rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        body.dark-mode .admin-tab:hover {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+        .admin-tab.active {
+            background: var(--btn-gradient);
+            color: white;
+            box-shadow: 0 5px 20px rgba(255, 64, 129, 0.4);
+            border: none;
+            transform: translateY(-2px);
+        }
+        body.dark-mode .admin-tab.active {
+            background: var(--dm-btn-gradient);
+            box-shadow: 0 5px 20px rgba(118, 255, 3, 0.4);
+        }
+
 
         /* Notifications */
         .notification {
@@ -451,7 +763,7 @@
             font-weight: 700;
             z-index: 10000;
             transform: translateX(150%);
-            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Пружинящая анимация */
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
         }
 
@@ -460,13 +772,13 @@
         }
 
         .notification.success {
-            background: var(--success);
-            box-shadow: 0 0 25px var(--success);
+            background: var(--notification-success);
+            box-shadow: 0 0 25px rgba(46, 204, 113, 0.7);
         }
 
         .notification.error {
-            background: #e74c3c;
-            box-shadow: 0 0 25px #e74c3c;
+            background: var(--notification-error);
+            box-shadow: 0 0 25px rgba(231, 76, 60, 0.7);
         }
 
         /* Responsive */
@@ -480,6 +792,8 @@
             .notification { right: 20px; top: 20px; }
             .tabs { gap: 10px; }
             .tab-btn { padding: 12px 20px; font-size: 1rem; }
+            .theme-switch-wrapper { top: 15px; right: 15px; }
+            .theme-switch-wrapper em { display: none; } /* Hide text on small screens */
         }
     </style>
 </head>
@@ -496,12 +810,22 @@
         <div class="sticker funpay">⚡</div>
         <div class="sticker fortnite">🛡️</div>
         <div class="sticker funpay">🔥</div>
-        <div class="sticker funpay">FUNPAY</div> </div>
+        <div class="sticker funpay">FUNPAY</div>
+    </div>
 
     <div class="container">
         <header>
             <h1 class="logo">MIZHWIX SHOP</h1>
-            <p style="font-size: 1.5rem; opacity: 0.9; font-weight: 600; text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);">🔥 Премиум аккаунты Fortnite • Быстрое Отслеживание</p>
+            <p style="font-size: 1.5rem; opacity: 0.9; font-weight: 600; text-shadow: 0 0 10px rgba(0, 0, 0, 0.2); transition: text-shadow 0.5s ease, color 0.5s ease;" class="header-slogan">
+                🔥 Премиум аккаунты Fortnite • Быстрое Отслеживание
+            </p>
+            <div class="theme-switch-wrapper">
+                <em>Тёмный режим</em>
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider round"></div>
+                </label>
+            </div>
         </header>
 
         <div class="tabs">
@@ -548,8 +872,12 @@
                 </form>
 
                 <div id="trackingCodeDisplay" class="tracking-code-display" style="display: none;">
-                    <h3 style="color: var(--fortnite-blue); margin-bottom: 15px; font-weight: 800; text-transform: uppercase;">🎉 Заказ УСПЕШНО создан!</h3>
-                    <p style="font-size: 1.1rem; opacity: 0.9;">Обязательно сохраните свой **УНИКАЛЬНЫЙ** код отслеживания:</p>
+                    <h3 style="color: var(--input-border); margin-bottom: 15px; font-weight: 800; text-transform: uppercase; transition: color 0.5s ease;" class="tracking-title">
+                        🎉 Заказ УСПЕШНО создан!
+                    </h3>
+                    <p style="font-size: 1.1rem; opacity: 0.9;">
+                        Обязательно сохраните свой **УНИКАЛЬНЫЙ** код отслеживания:
+                    </p>
                     <div class="tracking-code" id="displayTrackingCode"></div>
                     <div>
                         <button class="copy-btn" onclick="copyTrackingCode()">
@@ -592,10 +920,10 @@
                 <button id="adminLogin" class="btn">📊 ВОЙТИ</button>
             </div>
 
-            <div class="admin-panel" id="adminPanel">
+            <div class="admin-panel" id="adminPanel" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 20px;">
                     <h2 class="form-title" style="margin-bottom: 0;">📊 АДМИН-ПАНЕЛЬ</h2>
-                    <button id="logoutBtn" class="btn btn-danger" style="width: auto; padding: 12px 25px;">🚪 ВЫЙТИ</button>
+                    <button id="logoutBtn" class="btn btn-danger" style="width: auto; padding: 12px 25px; background: #e74c3c;">🚪 ВЫЙТИ</button>
                 </div>
                 
                 <div class="admin-tabs">
@@ -640,9 +968,36 @@
         const trackingResult = document.getElementById('trackingResult');
         const trackingCodeDisplay = document.getElementById('trackingCodeDisplay');
         const displayTrackingCode = document.getElementById('displayTrackingCode');
+        const themeToggle = document.getElementById('checkbox');
+        const body = document.body;
         
         const ADMIN_PASSWORD = '858585';
         let currentAdminTab = 'new';
+
+        // --- Theme Toggle Logic ---
+        function applyTheme(isDarkMode) {
+            if (isDarkMode) {
+                body.classList.add('dark-mode');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                body.classList.remove('dark-mode');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+
+        // Check for saved theme preference on load
+        const savedTheme = localStorage.getItem('darkMode');
+        if (savedTheme === 'enabled') {
+            themeToggle.checked = true;
+            applyTheme(true);
+        } else {
+            themeToggle.checked = false;
+            applyTheme(false); // Ensure light mode is applied if not explicitly dark
+        }
+
+        themeToggle.addEventListener('change', (event) => {
+            applyTheme(event.target.checked);
+        });
 
         // Tab System
         document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -688,7 +1043,6 @@
             navigator.clipboard.writeText(code).then(() => {
                 showNotification('📋 Код скопирован в буфер обмена!');
             }).catch(() => {
-                // Fallback for older browsers
                 const textArea = document.createElement('textarea');
                 textArea.value = code;
                 document.body.appendChild(textArea);
@@ -730,11 +1084,9 @@
 
                 await db.collection('orders').add(orderData);
                 
-                // Show tracking code permanently
                 displayTrackingCode.textContent = trackingCode;
                 trackingCodeDisplay.style.display = 'block';
                 
-                // Reset form but keep tracking code visible
                 orderForm.reset();
                 
                 showNotification('✅ Заказ успешно создан! Сохраните код для отслеживания.');
@@ -763,7 +1115,7 @@
                     .get();
 
                 if (snapshot.empty) {
-                    trackingResult.innerHTML = '<p>❌ Заказ с таким кодом не найден</p>';
+                    trackingResult.innerHTML = '<p style="color: var(--notification-error);">❌ Заказ с таким кодом не найден</p>';
                     trackingResult.style.display = 'block';
                     return;
                 }
@@ -805,13 +1157,15 @@
                     <div class="status-timeline">
                         ${timeline}
                     </div>
-                    <p><em>ℹ️ Статус обновляется автоматически. Спасибо за доверие FUNPAY!</em></p>
+                    <p style="margin-top: 20px; opacity: 0.8; font-size: 0.9rem;">
+                        <em>ℹ️ Статус обновляется автоматически. Спасибо за доверие FUNPAY!</em>
+                    </p>
                 `;
                 trackingResult.style.display = 'block';
                 
             } catch (error) {
                 console.error('Ошибка:', error);
-                trackingResult.innerHTML = '<p>❌ Ошибка при поиске заказа</p>';
+                trackingResult.innerHTML = '<p style="color: var(--notification-error);">❌ Ошибка при поиске заказа</p>';
                 trackingResult.style.display = 'block';
             }
         });
@@ -847,7 +1201,7 @@
                 .get()
                 .then(snapshot => {
                     if (snapshot.empty) {
-                        ordersList.innerHTML = `<div class="order-card" style="text-align: center;">Нет заказов со статусом: **${currentAdminTab.toUpperCase()}**</div>`;
+                        ordersList.innerHTML = `<div class="order-card" style="text-align: center; border-left-color: var(--notification-error);">Нет заказов со статусом: **${currentAdminTab.toUpperCase()}**</div>`;
                         return;
                     }
 
@@ -859,9 +1213,9 @@
                         let statusColor = '';
 
                         switch(order.status) {
-                            case 'new': statusText = 'НОВЫЙ'; statusColor = 'var(--warning)'; break;
-                            case 'processing': statusText = 'В ОБРАБОТКЕ'; statusColor = 'var(--secondary)'; break;
-                            case 'completed': statusText = 'ВЫПОЛНЕН'; statusColor = 'var(--success)'; break;
+                            case 'new': statusText = 'НОВЫЙ'; statusColor = 'var(--status-new)'; break;
+                            case 'processing': statusText = 'В ОБРАБОТКЕ'; statusColor = 'var(--status-processing)'; break;
+                            case 'completed': statusText = 'ВЫПОЛНЕН'; statusColor = 'var(--status-completed)'; break;
                         }
 
                         const card = document.createElement('div');
@@ -880,74 +1234,11 @@
                             <p><strong>💃 Эмоции:</strong> ${order.emotes}</p>
                             ${order.additional ? `<p><strong>📝 Доп. инфо:</strong> ${order.additional}</p>` : ''}
                             <div class="admin-notes">
-                                <strong>💬 Заметки Админа:</strong>
+                                <strong style="color: var(--secondary-text); transition: color 0.5s ease;">💬 Заметки Админа:</strong>
                                 <textarea id="notes-${orderId}" class="notes-input" placeholder="Добавить/Изменить заметки">${order.adminNotes || ''}</textarea>
                             </div>
                             <div class="order-actions">
-                                <button class="btn btn-small btn-success" onclick="updateOrderStatus('${orderId}', 'completed')">✅ Выполнить</button>
-                                <button class="btn btn-small btn-warning" onclick="updateOrderStatus('${orderId}', 'processing')">🔄 В Обработке</button>
-                                <button class="btn btn-small btn-danger" onclick="deleteOrder('${orderId}')">🗑️ Удалить</button>
-                                <button class="btn btn-small" style="background: var(--fortnite-blue); margin-top: 0;" onclick="saveAdminNotes('${orderId}')">💾 Сохранить Заметки</button>
-                            </div>
-                        `;
-                        ordersList.appendChild(card);
-                    });
-                })
-                .catch(error => {
-                    console.error("Ошибка загрузки заказов: ", error);
-                    ordersList.innerHTML = `<div class="order-card" style="color: #e74c3c;">❌ Ошибка загрузки заказов.</div>`;
-                });
-        }
-
-        // Update Order Status
-        window.updateOrderStatus = function(orderId, newStatus) {
-            db.collection('orders').doc(orderId).update({
-                status: newStatus
-            })
-            .then(() => {
-                showNotification(`✅ Статус заказа ${orderId.substring(0, 6)}... обновлен на: ${newStatus.toUpperCase()}`);
-                loadAdminOrders(); // Reload orders for the current tab
-            })
-            .catch(error => {
-                console.error("Ошибка обновления статуса: ", error);
-                showNotification('❌ Ошибка обновления статуса', 'error');
-            });
-        }
-
-        // Delete Order
-        window.deleteOrder = function(orderId) {
-            if (!confirm(`Вы уверены, что хотите удалить заказ ${orderId.substring(0, 6)}...?`)) {
-                return;
-            }
-
-            db.collection('orders').doc(orderId).delete()
-            .then(() => {
-                showNotification(`🗑️ Заказ ${orderId.substring(0, 6)}... удален`);
-                loadAdminOrders();
-            })
-            .catch(error => {
-                console.error("Ошибка удаления заказа: ", error);
-                showNotification('❌ Ошибка удаления заказа', 'error');
-            });
-        }
-        
-        // Save Admin Notes
-        window.saveAdminNotes = function(orderId) {
-            const notesTextarea = document.getElementById(`notes-${orderId}`);
-            const notes = notesTextarea ? notesTextarea.value : '';
-
-            db.collection('orders').doc(orderId).update({
-                adminNotes: notes
-            })
-            .then(() => {
-                showNotification(`💾 Заметки для заказа ${orderId.substring(0, 6)}... сохранены!`);
-                // No need to reload orders, just update UI if necessary
-            })
-            .catch(error => {
-                console.error("Ошибка сохранения заметок: ", error);
-                showNotification('❌ Ошибка сохранения заметок', 'error');
-            });
-        }
-    </script>
-</body>
-</html>
+                                <button class="btn btn-small" style="background: var(--status-completed); margin-top: 0;" onclick="updateOrderStatus('${orderId}', 'completed')">✅ Выполнить</button>
+                                <button class="btn btn-small" style="background: var(--status-processing); margin-top: 0;" onclick="updateOrderStatus('${orderId}', 'processing')">🔄 В Обработке</button>
+                                <button class="btn btn-small" style="background: var(--notification-error); margin-top: 0;" onclick="deleteOrder('${orderId}')">🗑️ Удалить</button>
+                                <button class="btn btn-small" style="background: var(--status-new); margin-top: 0;" onclick="saveAdminNotes('${orderId}')">💾 Сохранить
